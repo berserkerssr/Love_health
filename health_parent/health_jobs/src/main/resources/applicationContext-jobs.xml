@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+               http://www.springframework.org/schema/beans/spring-beans.xsd
+               http://www.springframework.org/schema/context
+               http://www.springframework.org/schema/context/spring-context.xsd
+               http://www.springframework.org/schema/aop
+               http://www.springframework.org/schema/aop/spring-aop.xsd
+               http://www.springframework.org/schema/tx
+               http://www.springframework.org/schema/tx/spring-tx.xsd">
+    <!--1：配置自定义Job类-->
+    <bean id="jobDemo" class="com.itheima.health.job.ClearImgJob"></bean>
+    <!--2：创建任务描述细节类（工厂），描述任务类和任务类中的方法-->
+    <bean id="jobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="jobDemo"></property>
+        <property name="targetMethod" value="deletePic"></property>
+    </bean>
+
+    <!--3：创建触发器对象（工厂），指定触发任务的时间
+    2种触发器：
+    1：SimpleTriggerFactoryBean：（频率）（每隔多长时间执行一次）
+    2：CronTriggerFactoryBean：（定时定点）（功能更强大）
+    -->
+    <bean id="trigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="jobDetail"></property>
+        <!--指定时间
+             cronExpression：表达式，指定时间
+             0/10 * * * * ? ：从0秒开始计算，每隔10秒执行一次任务
+        -->
+        <property name="cronExpression" value="10 27 12 * * ?"></property>
+    </bean>
+
+    <!--4：创建任务调度对象（工厂），调度触发器-->
+    <bean id="scheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <ref bean="trigger"></ref>
+            </list>
+        </property>
+    </bean>
+</beans>
