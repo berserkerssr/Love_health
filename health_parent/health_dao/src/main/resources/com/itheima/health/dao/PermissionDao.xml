@@ -23,4 +23,7 @@
         values
         (#{name},#{keyword},#{description})
     </select>
+    <select id="findById" parameterType="int" resultType="permission">
+       SELECT * FROM t_permission WHERE id=#{value}
+    </select>
 </mapper>

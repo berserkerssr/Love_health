@@ -44,4 +44,16 @@ public class PermissionController {
             return new Result(false,MessageConstant.ADD_CHECKITEM_FAIL);
         }
     }
+    // ID查询检查项（回显）
+    @RequestMapping(value = "/findById")
+    public Result findById(Integer id){
+        Permission permission = permissionService.findById(id);
+        if(permission!=null){
+            return new Result(true,MessageConstant.QUERY_PERMISSION_SUCCESS,permission);
+        }
+        else{
+            return new Result(false,MessageConstant.QUERY_PERMISSION_FAIL);
+        }
+    }
+
 }

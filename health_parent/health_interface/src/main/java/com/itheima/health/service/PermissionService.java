@@ -11,4 +11,6 @@ public interface PermissionService {
     PageResult findAll(Integer currentPage, Integer pageSize, String queryString);
 
     void add(Permission permission);
+
+    Permission findById(Integer id);
 }

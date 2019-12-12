@@ -37,4 +37,9 @@ public class PermissionServiceImpl implements PermissionService {
     public void add(Permission permission) {
         permissionDao.add(permission);
     }
+
+    @Override
+    public Permission findById(Integer id) {
+        return permissionDao.findById(id);
+    }
 }

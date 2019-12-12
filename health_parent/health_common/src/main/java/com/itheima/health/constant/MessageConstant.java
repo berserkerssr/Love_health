@@ -66,4 +66,6 @@ public class MessageConstant {
     public static final String GET_BUSINESS_REPORT_FAIL = "获取运营统计数据失败";
     public static final String GET_SETMEAL_LIST_SUCCESS = "查询套餐列表数据成功";
     public static final String GET_SETMEAL_LIST_FAIL = "查询套餐列表数据失败";
+    public static final String QUERY_PERMISSION_SUCCESS ="查询权限成功";
+    public static final String QUERY_PERMISSION_FAIL ="查询权限失败";
 }

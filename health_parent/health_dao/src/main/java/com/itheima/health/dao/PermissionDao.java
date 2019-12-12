@@ -13,4 +13,6 @@ public interface PermissionDao {
     List<CheckItem> findPage(String queryString);
 
     void add(Permission permission);
+
+    Permission findById(Integer id);
 }
