@@ -1,6 +1,8 @@
 package com.itheima.health.service.impl;
 
 import com.alibaba.dubbo.config.annotation.Service;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.itheima.health.constant.RedisConstant;
@@ -62,9 +64,20 @@ public class SetmealServiceImpl implements SetmealService {
         return new PageResult(page.getTotal(),page.getResult());
     }
 
+    // 查询所有套餐
     @Override
     public List<Setmeal> findAll() {
-        return setmealDao.findAll();
+        String RedisSetMealList = jedisPool.getResource().get("RedisSetMealList");
+        if (RedisSetMealList == null) {
+            List<Setmeal> list = setmealDao.findAll();
+            System.out.println("走数据库查询/n"+list);
+            String JSONSetMealList = JSON.toJSON(list).toString();
+            jedisPool.getResource().set("RedisSetMealList",JSONSetMealList);
+            return list;
+        }
+        List<Setmeal> setMeals = JSON.parseArray(RedisSetMealList,Setmeal.class);
+        System.out.println("走redis查询/n"+setMeals);
+        return setMeals;
     }
 
     // 方案一：使用java代码分析逻辑
@@ -86,11 +99,21 @@ public class SetmealServiceImpl implements SetmealService {
 //    }
 
     // 使用mybatis的映射
+    // 使用套餐id，查询套餐详情
     @Override
     public Setmeal findById(Integer id) {
         // 1：使用套餐id，查询套餐对象
-        Setmeal setmeal = setmealDao.findById(id);
-        return setmeal;
+        String RedisSetMeal = jedisPool.getResource().get("RedisSetMeal"+id);
+        if (RedisSetMeal == null) {
+            Setmeal setmeal = setmealDao.findById(id);
+            System.out.println("走数据库查询/n" + setmeal);
+            String JSONSetMeal = JSON.toJSON(setmeal).toString();
+            jedisPool.getResource().set("RedisSetMeal"+id,JSONSetMeal);
+            return setmeal;
+        }
+        Setmeal setMeal = JSON.parseObject(RedisSetMeal,Setmeal.class);
+        System.out.println("走redis查询/n" + setMeal);
+        return setMeal;
     }
 
     @Override
