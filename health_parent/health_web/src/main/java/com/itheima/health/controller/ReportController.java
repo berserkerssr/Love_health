@@ -6,9 +6,11 @@ import com.itheima.health.entity.Result;
 import com.itheima.health.service.MemberService;
 import com.itheima.health.service.ReportService;
 import com.itheima.health.service.SetmealService;
+import com.itheima.health.utils.DateUtils;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -181,6 +183,28 @@ public class ReportController {
         } catch (Exception e) {
             e.printStackTrace();
             return null;
+        }
+    }
+
+    //根据时间段展示会员数量
+    @RequestMapping(value = "/getMemberReportAdd")
+    public Result getMemberReportAdd(@RequestBody Map<String,Object> mapDate){
+        String startTime = (String) mapDate.get("startTime");
+        String endTime = (String) mapDate.get("endTime");
+        try {
+            // 1：数据集合，存放months
+            List<String> months = DateUtils.getMonthBetween(startTime, endTime,"yyyy-MM");
+
+            // 2：数据集合，存放memberCount，根据注册时间完成查询
+            List<Integer> memberCount = memberService.findMonthMemberCountByRegTime(months);
+            // 构造Map集合
+            Map<String,Object> map = new HashMap<>();
+            map.put("months",months); // List<String>
+            map.put("memberCount",memberCount); // List<Integer>
+            return new Result(true, MessageConstant.GET_MEMBER_NUMBER_REPORT_SUCCESS,map);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false,MessageConstant.GET_MEMBER_NUMBER_REPORT_FAIL);
         }
     }
 }

@@ -55,4 +55,22 @@ public class MemberServiceImpl implements MemberService{
         }
         return memberCounts;
     }
+
+    //通过月份查询每个月的会员数量
+    @Override
+    public List<Integer> findMonthMemberCountByRegTime(List<String> months) {
+        // 组织数据
+        List<Integer> memberCounts = new ArrayList<>();
+        // 遍历months
+        if(months!=null && months.size()>0){
+            // 格式：[2019-01, 2019-02, 2019-03, 2019-04, 2019-05, 2019-06, 2019-07, 2019-08, 2019-09, 2019-10, 2019-11, 2019-12]
+            for (String month : months) {
+                String begin=month+"-1";//每个月的第一天
+                String end = month+"-31"; // 使用当前月，计算当前月的最后1天
+                Integer count = memberDao.findMonthMemberCountByRegTime(begin,end);
+                memberCounts.add(count);
+            }
+        }
+        return memberCounts;
+    }
 }
