@@ -11,4 +11,15 @@
     <select id="findUserByUsername" parameterType="string" resultMap="userMap">
         SELECT * FROM t_user WHERE username = #{username}
     </select>
+
+    <select id="findMenuListByUserId" parameterType="int" resultType="menu">
+        select * from t_menu
+        where id
+        in (SELECT menu_id FROM t_role_menu
+                WHERE role_id = (SELECT role_id FROM t_user_role WHERE user_id = #{id})) and level = 1;
+    </select>
+
+    <select id="findMenuListLevel2ByMenuId" parameterType="int" resultType="menu">
+        select t2.* from t_menu t1,t_menu t2 where t1.`id` = t2.`parentMenuId` and t1.`id` = #{id};
+    </select>
 </mapper>
