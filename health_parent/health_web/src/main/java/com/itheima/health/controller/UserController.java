@@ -9,6 +9,9 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * @ClassName CheckItemController
  * @Description TODO
@@ -36,6 +39,21 @@ public class UserController {
         } catch (Exception e) {
             e.printStackTrace();
             return new Result(false,MessageConstant.GET_USERNAME_FAIL);
+        }
+    }
+
+    @RequestMapping("/getMenuList")
+    public Result getMenuList()throws Exception{
+        try{
+            org.springframework.security.core.userdetails.User user =
+                    (org.springframework.security.core.userdetails.User)
+                            SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            //通过user.name 查 具体的菜单列表
+            // t_user -> t_user_role -> t_role_menu -> t_menu
+            List<Map<String,Object>> list = userService.getMenuList(user.getUsername());
+            return new Result(true, MessageConstant.GET_USERNAME_SUCCESS,list);
+        }catch (Exception e){
+            return new Result(false, MessageConstant.GET_USERNAME_FAIL);
         }
     }
 

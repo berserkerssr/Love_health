@@ -7,6 +7,9 @@ import com.itheima.health.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * @ClassName CheckItemServiceImpl
  * @Description TODO
@@ -26,5 +29,10 @@ public class UserServiceImpl implements UserService{
     public User findUserByUsername(String username) {
         User user = userDao.findUserByUsername(username);
         return user;
+    }
+
+    @Override
+    public List<Map<String, Object>> getMenuList(String username) {
+        return null;
     }
 }
