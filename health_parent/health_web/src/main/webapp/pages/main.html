@@ -84,7 +84,7 @@
         el: '#app',
         data:{
             username:null,
-            menuList:[
+            menuList:[/*
                 {
                     "path": "1",
                     "title": "工作台",
@@ -189,16 +189,29 @@
                             "children":[]
                         }
                     ]
-                }
+                }*/
             ]
         },
         // 在跳转到main.html的时候，从SpringSecurity中获取用户信息，显示username对应的模型中
         created:function () {
-            axios.post("/user/getUsername.do").then((response)=>{
-                this.username = response.data.data;
-            }).catch((error)=>{
+            this.getUsername();
+            this.getMenuList();
+        },
+        methods:{
+            //获取当前登录用户名
+            getUsername(){
+                axios.get('/user/getUsername.do').then((res)=>{
+                    this.username = res.data.data;
+                })
+            },
 
-            })
+            //获取当前登录用户权限菜单列表
+            getMenuList(){
+                axios.get('/user/getMenuList.do').then((res)=>{
+                    this.menuList = res.data.data;
+                })
+            }
+
         }
     });
     $(function() {
