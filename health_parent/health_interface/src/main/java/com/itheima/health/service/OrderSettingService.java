@@ -12,4 +12,5 @@ public interface OrderSettingService {
     List<Map> findOrderSettingByOrderDate(String date);
 
     void updateNumberByOrderDate(OrderSetting orderSetting);
+    public void deleteOrderSettingByOrderDate(String today);
 }

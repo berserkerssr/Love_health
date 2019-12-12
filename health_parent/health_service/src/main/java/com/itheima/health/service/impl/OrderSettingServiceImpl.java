@@ -85,4 +85,8 @@ public class OrderSettingServiceImpl implements OrderSettingService{
             orderSettingDao.updateNumberByOrderDate(orderSetting);
         }
     }
+    @Override
+    public void deleteOrderSettingByOrderDate(String today) {
+        orderSettingDao.deleteOrderSettingByOrderDate(today);
+    }
 }

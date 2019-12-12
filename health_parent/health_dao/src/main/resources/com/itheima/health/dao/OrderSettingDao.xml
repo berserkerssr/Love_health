@@ -32,4 +32,9 @@
     <update id="updateReservatioinsByOrderDate" parameterType="date">
         UPDATE t_ordersetting SET reservations = reservations+1 WHERE orderDate = #{orderDate}
     </update>
+
+    <!--删除指定日期之前的预约-->
+    <delete id="deleteOrderSettingByOrderDate" parameterType="String">
+        DELETE FROM t_orderSetting WHERE orderDate &lt;#{orderDate}
+    </delete>
 </mapper>

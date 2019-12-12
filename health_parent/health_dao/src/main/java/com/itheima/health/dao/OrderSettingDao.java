@@ -20,4 +20,6 @@ public interface OrderSettingDao {
     OrderSetting getOrderSettingByOrderDate(Date date);
 
     void updateReservatioinsByOrderDate(Date date);
+
+    void deleteOrderSettingByOrderDate(String orderDate);
 }
