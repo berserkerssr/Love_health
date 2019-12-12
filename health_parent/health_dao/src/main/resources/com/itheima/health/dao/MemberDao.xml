@@ -40,4 +40,9 @@
     <select id="findThisNewMember" parameterType="string" resultType="int">
         SELECT COUNT(*) FROM t_member WHERE regTime &gt;= #{date}
     </select>
+
+    <!--统计每月的会员数量-->
+    <select id="findMonthMemberCountByRegTime" resultType="int">
+        SELECT COUNT(*) FROM t_member WHERE regTime between #{begin} and #{end}
+    </select>
 </mapper>
