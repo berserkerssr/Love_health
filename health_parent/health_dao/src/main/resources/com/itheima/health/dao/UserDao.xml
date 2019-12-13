@@ -31,9 +31,10 @@
             WHERE username like '%${value}%'
         </if>
     </select>
-
-    <!--通过username查询roleId-->
-    <select id="findRoleIdByUsername" parameterType="String" resultType="int">
-        SELECT ur.`role_id` FROM t_user u,t_user_role ur WHERE u.`id`=ur.`user_id` AND u.`username`=#{username}
+    <select id="findById" parameterType="int" resultType="user">
+         SELECT * FROM t_user WHERE id=#{value}
+    </select>
+    <select id="findRoleIdsByCheckGroupId" parameterType="int" resultType="int">
+        SELECT role_id FROM t_user_role WHERE user_id=#{value}
     </select>
 </mapper>

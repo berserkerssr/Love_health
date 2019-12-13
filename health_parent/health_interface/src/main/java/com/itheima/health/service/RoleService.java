@@ -1,6 +1,9 @@
 package com.itheima.health.service;
 
 import com.itheima.health.entity.PageResult;
+import com.itheima.health.pojo.Role;
+
+import java.util.List;
 
 /**
  * @author TALON WAT
@@ -8,4 +11,18 @@ import com.itheima.health.entity.PageResult;
  */
 public interface RoleService {
     PageResult findPage(Integer currentPage, Integer pageSize, String queryString);
+
+    List<Role> findAll();
+
+    Role findById(Integer id);
+
+    List<Integer> findPermissionIdsByRoleId(Integer id);
+
+    List<Integer> findMenuIdsByRoleId(Integer id);
+
+    void add(Role role, Integer[] permissionIds, Integer[] menuIds);
+
+    void edit(Role role, Integer[] permissionIds, Integer[] menuIds);
+
+    void deleteById(Integer id);
 }

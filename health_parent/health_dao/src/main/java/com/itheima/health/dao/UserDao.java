@@ -17,5 +17,7 @@ public interface UserDao {
 
     Page<CheckItem> findByCondition(String queryString);
 
-    Integer findRoleIdByUsername(String username);
+    User findById(Integer id);
+
+    List<Integer> findRoleIdsByCheckGroupId(Integer id);
 }

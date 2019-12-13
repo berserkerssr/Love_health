@@ -5,6 +5,7 @@ import com.itheima.health.constant.MessageConstant;
 import com.itheima.health.entity.PageResult;
 import com.itheima.health.entity.QueryPageBean;
 import com.itheima.health.entity.Result;
+import com.itheima.health.pojo.CheckGroup;
 import com.itheima.health.pojo.Menu;
 import com.itheima.health.service.UserService;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -54,8 +55,7 @@ public class UserController {
                             SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             //通过user.name 查 具体的菜单列表
             // t_user -> t_user_role -> t_role_menu -> t_menu
-            /*List<Map<String,Object>> list = userService.getMenuList(user.getUsername());*/
-            List<Menu> list = userService.getMenuListDemo02(user.getUsername());
+            List<Map<String,Object>> list = userService.getMenuList(user.getUsername());
             return new Result(true, MessageConstant.GET_USERNAME_SUCCESS,list);
         }catch (Exception e){
             return new Result(false, MessageConstant.GET_USERNAME_FAIL);
@@ -70,6 +70,22 @@ public class UserController {
                 queryPageBean.getPageSize(),
                 queryPageBean.getQueryString());
         return pageResult;
+    }
+    @RequestMapping(value = "/findById")
+    public Result findById(Integer id){
+        com.itheima.health.pojo.User user = userService.findById(id);
+        if(user!=null){
+            return new Result(true, MessageConstant.QUERY_USER_SUCCESS,user);
+        }
+        else{
+            return new Result(false,MessageConstant.QUERY_USER_FAIL);
+        }
+    }
+
+    @RequestMapping(value = "/findRoleIdsByCheckGroupId")
+    public List<Integer> findRoleIdsByCheckGroupId(Integer id){
+        List<Integer> list  = userService.findRoleIdsByCheckGroupId(id);
+        return list;
     }
 
 }

@@ -128,4 +128,14 @@ public class UserServiceImpl implements UserService{
         // 3：封装PageResult数据
         return new PageResult(page.getTotal(),page.getResult());
     }
+
+    @Override
+    public User findById(Integer id) {
+        return userDao.findById(id);
+    }
+
+    @Override
+    public List<Integer> findRoleIdsByCheckGroupId(Integer id) {
+        return userDao.findRoleIdsByCheckGroupId(id) ;
+    }
 }

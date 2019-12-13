@@ -33,28 +33,8 @@ public class CheckItemServiceImpl implements CheckItemService {
         checkItemDao.add(checkItem);
     }
 
-    // 不使用mybatis的分页插件PageHelper（传统方式）
-    // 1：查找总记录数（sql：SELECT COUNT(*) FROM t_checkitem WHERE CODE = 'cz001' OR NAME = 'cz001' ）
-    // Long count = checkItemDao.findCountByCondition(queryString);
-    // 2：查询当前页显示的记录数（sql：SELECT * FROM t_checkitem WHERE CODE = 'cz001' OR NAME = 'cz001' LIMIT 0,10 ）
-    //       limit关键字：参数一：当前页从第几条开始检索（0表示第1条）（计算公式：(currentPage-1)*pageSize）
-    //                    参数二：当前页最多显示的记录数（计算公式：pageSize）
-    // List<CheckItem> list = checkItemDao.findByCondition(queryString);
-    // new PageResult(count,list);
-    // 可以实现，问题1：麻烦；问题2：不能同通用，不能进行切换数据库
     @Override
     public PageResult findPage(Integer currentPage, Integer pageSize, String queryString) {
-        // 方案一：使用PageInfo完成封装
-        // 使用Mybatis的分页插件（1：导入分页插件的坐标；2：在applicationContext-dao.xml中配置分页插件）
-//        // 1：初始化分页的参数
-//        PageHelper.startPage(currentPage,pageSize);
-//        // 2：查询
-//        List<CheckItem> list = checkItemDao.findByCondition(queryString);
-//        // 3：封装PageResult数据
-//        PageInfo<CheckItem> pageInfo = new PageInfo<>(list);
-//        return new PageResult(pageInfo.getTotal(),pageInfo.getList());
-
-        // 方案二：使用Page完成封装
         // 1：初始化分页的参数
         PageHelper.startPage(currentPage,pageSize);
         // 2：查询
