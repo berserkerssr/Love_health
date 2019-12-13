@@ -2,16 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="84c2e392-a9af-4761-8006-c7f20990ab16" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LH/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/LH/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/health_parent/health_dao/src/main/java/com/itheima/health/dao/MemberDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/health_parent/health_dao/src/main/java/com/itheima/health/dao/MemberDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/health_parent/health_dao/src/main/resources/com/itheima/health/dao/MemberDao.xml" beforeDir="false" afterPath="$PROJECT_DIR$/health_parent/health_dao/src/main/resources/com/itheima/health/dao/MemberDao.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/health_parent/health_interface/src/main/java/com/itheima/health/service/MemberService.java" beforeDir="false" afterPath="$PROJECT_DIR$/health_parent/health_interface/src/main/java/com/itheima/health/service/MemberService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/health_parent/health_service/src/main/java/com/itheima/health/service/impl/MemberServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/health_parent/health_service/src/main/java/com/itheima/health/service/impl/MemberServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/health_parent/health_web/src/main/java/com/itheima/health/controller/ReportController.java" beforeDir="false" afterPath="$PROJECT_DIR$/health_parent/health_web/src/main/java/com/itheima/health/controller/ReportController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lh/.idea/.gitignore" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/health_parent/health_interface/target/" />
     <ignored path="$PROJECT_DIR$/health_parent/health_pojo/target/" />
@@ -52,14 +43,14 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="java" value="4" />
-          <entry key="txt" value="2" />
+          <entry key="txt" value="7" />
           <entry key="xml" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="JAVA" value="4" />
-          <entry key="PLAIN_TEXT" value="2" />
+          <entry key="PLAIN_TEXT" value="7" />
           <entry key="XML" value="2" />
         </counts>
       </usages-collector>
@@ -187,7 +178,7 @@
     <option name="jreName" value="#JAVA_HOME" />
     <option name="vmOptions" value="-DarchetypeCatalog=internal" />
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="670" />
     <option name="width" value="1245" />
     <option name="height" value="1040" />
@@ -504,7 +495,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1576233888419" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1576233990980" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/health_parent/pom.xml" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -597,15 +588,23 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1576233173632</updated>
-      <workItem from="1576233176199" duration="809000" />
+      <workItem from="1576233176199" duration="1202000" />
     </task>
+    <task id="LOCAL-00001" summary="提交">
+      <created>1576234381965</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1576234381965</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="809000" />
+    <option name="totallyTimeSpent" value="1202000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
+    <frame x="-7" y="-7" width="1550" height="838" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="Designer" />
@@ -645,6 +644,10 @@
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="提交" />
+    <option name="LAST_COMMIT_MESSAGE" value="提交" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/health_parent/health_web/src/main/webapp/pages/report_member_age.html">
