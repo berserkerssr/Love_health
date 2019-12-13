@@ -5,8 +5,6 @@ import com.itheima.health.constant.MessageConstant;
 import com.itheima.health.entity.PageResult;
 import com.itheima.health.entity.QueryPageBean;
 import com.itheima.health.entity.Result;
-import com.itheima.health.pojo.CheckGroup;
-import com.itheima.health.pojo.Role;
 import com.itheima.health.service.UserService;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
@@ -84,7 +82,7 @@ public class UserController {
 
     @RequestMapping(value = "/findRoleIdsByCheckGroupId")
     public List<Integer> findRoleIdsByCheckGroupId(Integer id){
-        List<Integer> list  = userService.findRoleIdsByCheckGroupId(id);
+        List<Integer> list  = userService.findRoleIdsByUserId(id);
         return list;
     }
     @RequestMapping(value = "/add")
@@ -95,6 +93,32 @@ public class UserController {
         } catch (Exception e) {
             e.printStackTrace();
             return new Result(false,MessageConstant.ADD_USER_FAIL);
+        }
+    }
+
+    @RequestMapping(value = "/edit")
+    public Result edit(@RequestBody com.itheima.health.pojo.User user, Integer [] roleIds){
+        try {
+            userService.edit(user,roleIds);
+            return new Result(true, MessageConstant.EDIT_USER_SUCCESS);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false,MessageConstant.EDIT_USER_FAIL);
+        }
+    }
+
+    // 删除用户
+    @RequestMapping(value = "/deleteById")
+    //@PreAuthorize(value = "hasAuthority('CHECKITEM_DELETE_ABC')")
+    public Result deleteById(Integer id){
+        try {
+            userService.deleteById(id);
+            return new Result(true, MessageConstant.DELETE_USER_SUCCESS);
+        } catch(RuntimeException e){
+            return new Result(false,e.getMessage());
+        } catch(Exception e) {
+            e.printStackTrace();
+            return new Result(false,MessageConstant.DELETE_USER_FAIL);
         }
     }
 

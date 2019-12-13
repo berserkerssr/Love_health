@@ -3,6 +3,7 @@ package com.itheima.health.service.impl;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.itheima.health.dao.RoleDao;
 import com.itheima.health.dao.UserDao;
 import com.itheima.health.entity.PageResult;
 import com.itheima.health.pojo.CheckItem;
@@ -87,8 +88,8 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public List<Integer> findRoleIdsByCheckGroupId(Integer id) {
-        return userDao.findRoleIdsByCheckGroupId(id) ;
+    public List<Integer> findRoleIdsByUserId(Integer id) {
+        return userDao.findRoleIdsByUserId(id) ;
     }
 
     @Override
@@ -98,6 +99,28 @@ public class UserServiceImpl implements UserService{
 
         //增加 role permission 关联
         this.setRoleAndPermission(user.getId(),roleIds);
+    }
+
+    @Override
+    public void edit(User user, Integer[] roleIds) {
+        //更新 user
+        userDao.update(user);
+
+        //删除 原来 user role 关联
+        userDao.removeUserAndRole(user.getId());
+
+        //增加 新 user role 关联
+        this.setRoleAndPermission(user.getId(),roleIds);
+    }
+
+    @Override
+    public void deleteById(Integer id) {
+        //  先删除 role下的关联
+        //删除 user role 关联
+        userDao.removeUserAndRole(id);
+
+        //  删除 user
+        userDao.deleteById(id);
     }
 
     private void setRoleAndPermission(Integer userId, Integer[] roleIds) {

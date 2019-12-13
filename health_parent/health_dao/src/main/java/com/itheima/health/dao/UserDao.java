@@ -20,9 +20,15 @@ public interface UserDao {
 
     User findById(Integer id);
 
-    List<Integer> findRoleIdsByCheckGroupId(Integer id);
+    List<Integer> findRoleIdsByUserId(Integer id);
 
     void add(User user);
 
     void setRoleAndPermission(Map<String, Object> map);
+
+    void update(User user);
+
+    void removeUserAndRole(Integer id);
+
+    void deleteById(Integer id);
 }

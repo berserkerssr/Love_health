@@ -98,4 +98,8 @@ public class MessageConstant {
     public static final String DELETE_ROLE_FAIL = "删除角色失败";
     public static final String ADD_USER_SUCCESS = "用户添加成功";
     public static final String ADD_USER_FAIL = "用户添加失败";
+    public static final String EDIT_USER_SUCCESS = "编辑用户成功";
+    public static final String EDIT_USER_FAIL = "编辑用户失败";
+    public static final String DELETE_USER_SUCCESS = "删除用户成功";
+    public static final String DELETE_USER_FAIL = "删除用户成功";
 }

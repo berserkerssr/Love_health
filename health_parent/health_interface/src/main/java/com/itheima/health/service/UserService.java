@@ -16,7 +16,11 @@ public interface UserService {
 
     User findById(Integer id);
 
-    List<Integer> findRoleIdsByCheckGroupId(Integer id);
+    List<Integer> findRoleIdsByUserId(Integer id);
 
     void add(User user, Integer[] permissionIds);
+
+    void edit(User user, Integer[] roleIds);
+
+    void deleteById(Integer id);
 }
