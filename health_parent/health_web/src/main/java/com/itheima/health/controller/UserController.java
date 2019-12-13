@@ -9,6 +9,7 @@ import com.itheima.health.pojo.CheckGroup;
 import com.itheima.health.pojo.Role;
 import com.itheima.health.pojo.Menu;
 import com.itheima.health.service.UserService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -63,15 +64,16 @@ public class UserController {
         }
     }
 
-    // 分页查询检查项列表
+    // 分页查询用户列表
     @RequestMapping(value = "/findPage")
-    //@PreAuthorize(value = "hasAuthority('USER_QUERY')")
+    @PreAuthorize(value = "hasAuthority('USER_QUERY')")
     public PageResult findPage(@RequestBody QueryPageBean queryPageBean){
         PageResult pageResult = userService.findPage(queryPageBean.getCurrentPage(),
                 queryPageBean.getPageSize(),
                 queryPageBean.getQueryString());
         return pageResult;
     }
+
     @RequestMapping(value = "/findById")
     public Result findById(Integer id){
         com.itheima.health.pojo.User user = userService.findById(id);
@@ -88,7 +90,9 @@ public class UserController {
         List<Integer> list  = userService.findRoleIdsByUserId(id);
         return list;
     }
+
     @RequestMapping(value = "/add")
+    @PreAuthorize(value = "hasAuthority('USER_ADD')")
     public Result add(@RequestBody com.itheima.health.pojo.User user, Integer [] roleIds){
         try {
             userService.add(user,roleIds);
@@ -100,6 +104,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/edit")
+    @PreAuthorize(value = "hasAuthority('USER_EDIT')")
     public Result edit(@RequestBody com.itheima.health.pojo.User user, Integer [] roleIds){
         try {
             userService.edit(user,roleIds);
@@ -112,7 +117,7 @@ public class UserController {
 
     // 删除用户
     @RequestMapping(value = "/deleteById")
-    //@PreAuthorize(value = "hasAuthority('CHECKITEM_DELETE_ABC')")
+    @PreAuthorize(value = "hasAuthority('USER_DELETE')")
     public Result deleteById(Integer id){
         try {
             userService.deleteById(id);
