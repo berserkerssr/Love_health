@@ -49,4 +49,18 @@
     <delete id="deleteById" parameterType="int">
          delete from t_menu where id = #{value}
     </delete>
+
+    <!--通过roleId查询菜单-->
+    <select id="findMenuByRoleId" resultType="menu">
+        SELECT m.* FROM t_menu m,t_role_menu rm WHERE m.`id`=rm.`menu_id`
+        <if test="roleId!=null">
+            AND rm.`role_id`=#{roleId}
+        </if>
+        <if test="parentMenuId!=null">
+            AND parentMenuId =#{parentMenuId}
+        </if>
+        <if test="parentMenuId==null">
+            AND parentMenuId is null
+        </if>
+    </select>
 </mapper>
