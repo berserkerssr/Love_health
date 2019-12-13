@@ -28,7 +28,7 @@ public class MenuController {
 
     // 分页查询检查项列表
     @RequestMapping(value = "/findPage")
-    //@PreAuthorize(value = "hasAuthority('MENU_QUERY')")
+    @PreAuthorize(value = "hasAuthority('MENU_QUERY')")
     public PageResult findPage(@RequestBody QueryPageBean queryPageBean){
         PageResult pageResult = menuService.findPage(queryPageBean.getCurrentPage(),
                 queryPageBean.getPageSize(),
@@ -36,7 +36,7 @@ public class MenuController {
         return pageResult;
     }
     @RequestMapping(value = "/add")
-    //@PreAuthorize(value = "hasAuthority('CHECKITEM_ADD')")
+    @PreAuthorize(value = "hasAuthority('MENU_ADD')")
     public Result add(@RequestBody Menu menu){
         try {
             menuService.add(menu);
@@ -69,7 +69,7 @@ public class MenuController {
         }
     }
     @RequestMapping(value = "/edit")
-    //@PreAuthorize(value = "hasAuthority('CHECKITEM_EDIT')")
+    @PreAuthorize(value = "hasAuthority('MENU_EDIT')")
     public Result edit(@RequestBody Menu menu){
         try {
             menuService.edit(menu);
@@ -81,7 +81,7 @@ public class MenuController {
     }
     // 删除检查项
     @RequestMapping(value = "/delete")
-    //@PreAuthorize(value = "hasAuthority('CHECKITEM_DELETE_ABC')")
+    @PreAuthorize(value = "hasAuthority('MENU_DELETE')")
     public Result deleteById(Integer id){
         try {
             menuService.deleteById(id);
