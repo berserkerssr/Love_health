@@ -57,11 +57,11 @@
                         <el-submenu v-for="menu in menuList" :index="menu.path">
                             <template slot="title">
                                 <i class="fa" :class="menu.icon"></i>
-                                {{menu.name}}
+                                {{menu.title}}
                             </template>
                             <template v-for="child in menu.children">
                                 <el-menu-item :index="child.path">
-                                    <a :href="child.linkUrl" target="right">{{child.name}}</a>
+                                    <a :href="child.linkUrl" target="right">{{child.title}}</a>
                                 </el-menu-item>
                             </template>
                         </el-submenu>

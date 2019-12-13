@@ -75,7 +75,7 @@ public class UserServiceImpl implements UserService{
         return mapMenu;
     }
 
-    @Override
+    /*@Override
     public List<Menu> getMenuListDemo02(String username) {
         //通过username获取roleId
         Integer roleId = userDao.findRoleIdByUsername(username);
@@ -88,7 +88,7 @@ public class UserServiceImpl implements UserService{
             menu.setChildren(menuChildren);
         }
         //此处使用递归，当数据库增加多级目录时该方法依然适用
-        /*List<Menu> menuList = getMenu(roleId, null);*/
+        *//*List<Menu> menuList = getMenu(roleId, null);*//*
         //数据库没有工作台这个菜单，需要自己添加到集合的首位
         Menu menu = new Menu();
         menu.setPath("1");
@@ -96,15 +96,13 @@ public class UserServiceImpl implements UserService{
         menu.setIcon("fa-dashboard");
         menuList.add(0, menu);
         return menuList;
-    }
+    }*/
 
-    /**
+   /* *//**
      * 使用递归查询菜单
      *
-     * @param roleId       用户id
-     * @param parentmenuId 菜单级别
-     * @return 菜单
-     */
+     *
+     *//*
     public List<Menu> getMenu(Integer roleId, Integer parentmenuId) {
         //调用持久层方法获取当前级别菜单
         List<Menu> menuList = menuDao.findMenuByRoleId(roleId, parentmenuId);
@@ -116,7 +114,7 @@ public class UserServiceImpl implements UserService{
             }
         }
         return menuList;
-    }
+    }*/
 
 
     @Override
