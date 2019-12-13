@@ -11,9 +11,9 @@
     <select id="findPage" parameterType="string" resultType="permission">
         select * from t_permission
         <if test="value != null and value.length > 0">
-            where 'name' like '%${value}%'
-            or 'keyword' like '%${value}%'
-            or 'description' like '%${value}%'
+            where name like '%${value}%'
+            or keyword like '%${value}%'
+            or description like '%${value}%'
         </if>
     </select>
 

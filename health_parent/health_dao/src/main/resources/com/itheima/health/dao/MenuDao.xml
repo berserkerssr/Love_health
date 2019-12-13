@@ -2,5 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.itheima.health.dao.MenuDao">
+    <!--分页查询：注意使用动态sql获取参数的时候，需要使用value-->
+    <select id="findByCondition" parameterType="string" resultType="menu">
+        <!--SELECT * FROM t_checkitem WHERE CODE = #{abc} OR NAME = #{abc}-->
+        SELECT * FROM t_menu
+        <if test="value!=null and value.length>0">
+            WHERE NAME like '%${value}%'
+        </if>
+    </select>
 
 </mapper>

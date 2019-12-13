@@ -55,7 +55,7 @@
     <div class="app-container">
         <div class="box">
             <div class="filter-container">
-                <el-input placeholder="编码/名称/助记码" v-model="pagination.queryString" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter"></el-input>
+                <el-input placeholder="角色名称" v-model="pagination.queryString" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter"></el-input>
                 <el-button @click="findPage()" class="dalfBut">查询</el-button>
                 <el-button type="primary" class="butT" @click="handleCreate()">新建</el-button>
             </div>
@@ -272,7 +272,7 @@
         methods: {
             //编辑
             handleEdit() {
-                axios.post("/checkgroup/edit.do?checkitemIds="+this.checkitemIds,this.formData).then((res)=>{
+                axios.post("/role/edit.do?checkitemIds="+this.checkitemIds,this.formData).then((res)=>{
                     this.dialogFormVisible4Edit = false;
 
                     if (res.data.flag){
@@ -289,7 +289,7 @@
             },
             //添加
             handleAdd () {
-                axios.post("/checkgroup/add.do?checkitemIds="+this.checkitemIds,this.formData).then((res)=>{
+                axios.post("/role/add.do?checkitemIds="+this.checkitemIds,this.formData).then((res)=>{
                     this.dialogFormVisible = false;
                     if (res.data.flag){
                         this.$message({
@@ -310,7 +310,7 @@
                     pageSize:this.pagination.pageSize,//每页显示的记录数
                     queryString:this.pagination.queryString//查询条件
                 };
-                axios.post("/checkgroup/findPage.do",param).then((res)=>{
+                axios.post("/role/findPage.do",param).then((res)=>{
                     this.dataList=res.data.rows;
                     this.pagination.total=res.data.total;
                 }).finally(()=>{
@@ -340,7 +340,7 @@
             // 弹出编辑窗口
             handleUpdate(row) {
                 //alert(row.id);
-                axios.get("/checkgroup/findById.do?id="+row.id).then((res)=>{
+                axios.get("/role/findById.do?id="+row.id).then((res)=>{
                     if (res.data.flag){
                         this.dialogFormVisible4Edit=true;
                         this.activeName='first';
@@ -348,7 +348,7 @@
                         axios.get("/checkitem/findAll.do").then((res)=>{
                             if (res.data.flag){
                                 this.tableData = res.data.data;
-                                axios.get("/checkgroup/findCheckItemIdsByCheckGroupId.do?id="+row.id).then((res)=>{
+                                axios.get("/role/findCheckItemIdsByCheckGroupId.do?id="+row.id).then((res)=>{
                                     this.checkitemIds=res.data;
                                 })
                             }else {

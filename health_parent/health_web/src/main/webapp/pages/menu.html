@@ -56,7 +56,7 @@
             </div>
             <!-- 新增标签弹层 -->
             <div class="add-form">
-                <el-dialog title="新增检查项" :visible.sync="dialogFormVisible">
+                <el-dialog title="新增菜单" :visible.sync="dialogFormVisible">
                     <el-form ref="dataAddForm" :model="formData" :rules="rules" label-position="right" label-width="100px">
                         <el-row>
                             <el-col :span="12">
@@ -199,7 +199,7 @@
             handleEdit() {
                 this.$refs['dataEditForm'].validate((valid) => {
                     if (valid) {
-                        axios.post("/checkitem/edit.do",this.formData).then((response)=>{
+                        axios.post("/menu/edit.do",this.formData).then((response)=>{
                             this.dialogFormVisible4Edit=false;
                             if (response.data.flag){
                                 this.$message({
@@ -222,7 +222,7 @@
             handleAdd () {
                 this.$refs['dataAddForm'].validate((valid) => {
                     if (valid) {
-                        axios.post("/checkitem/add.do",this.formData).then((response)=>{
+                        axios.post("/menu/add.do",this.formData).then((response)=>{
                             this.dialogFormVisible=false;
                             if (response.data.flag){
                                 this.$message({
@@ -251,9 +251,9 @@
                     queryString:this.pagination.queryString
 
                 };
-                axios.post("/checkitem/findPage.do",param).then((response)=>{
-                    this.dataList=response.data.data.rows;
-                    this.pagination.total=response.data.data.total;
+                axios.post("/menu/findPage.do",param).then((response)=>{
+                    this.dataList=response.data.rows;
+                    this.pagination.total=response.data.total;
                 }).catch(()=>{
 
                 }).finally(()=>{
@@ -272,7 +272,7 @@
             // 弹出编辑窗口
             handleUpdate(row) {
                 //alert(row.id);
-                axios.get("/checkitem/findById.do?id=" + row.id).then((res)=>{
+                axios.get("/menu/findById.do?id=" + row.id).then((res)=>{
                     if(res.data.flag){
                         //设置编辑窗口属性，dialogFormVisible4Edit为true表示显示
                         this.dialogFormVisible4Edit = true;
@@ -294,7 +294,7 @@
                 this.$confirm("确认删除当前选中记录吗？","提示",{type:'warning'}).then(()=>{
                     //点击确定按钮时只需此处代码
                     //   alert('用户点击的是确定按钮');
-                    axios.get("/checkitem/delete.do?id=" + row.id).then((response)=>{
+                    axios.get("/menu/delete.do?id=" + row.id).then((response)=>{
                         if (response.data.flag){
                             this.$message({
                                 message: response.data.message,
