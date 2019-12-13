@@ -10,6 +10,7 @@ import com.itheima.health.utils.DateUtils;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -75,6 +76,7 @@ public class ReportController {
 
     // 统计套餐预约占比饼形图
     @RequestMapping(value = "/getSetmealReport")
+    @PreAuthorize(value = "hasAuthority('REPORT_VIEW')")
     public Result getSetmealReport(){
         try {
             // 存放套餐的名称
