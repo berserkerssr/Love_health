@@ -39,6 +39,7 @@ public class SpringSecurityUserService implements UserDetailsService {
         com.itheima.health.pojo.User user = userService.findUserByUsername(username);
         // 表示认证失败（登录名的校验）,return null;表示认证失败，此时页面会抛出异常（org.springframework.security.authentication.InternalAuthenticationServiceException:用户名输入有误）
         if(user==null){
+
             return null;
         }
         //2：完成授权，使用登录名作为查询条件，查询数据库，获取当前登录名对应的角色（keyword）和权限（keyword）
