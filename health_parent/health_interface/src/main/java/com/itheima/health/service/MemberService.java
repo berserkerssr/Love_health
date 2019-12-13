@@ -4,6 +4,7 @@ import com.itheima.health.entity.PageResult;
 import com.itheima.health.pojo.Member;
 
 import java.util.List;
+import java.util.Map;
 
 public interface MemberService {
 
@@ -16,4 +17,9 @@ public interface MemberService {
     List<Integer> findMonthMemberCountByRegTime(List<String> months);
 
     PageResult findPage(Integer currentPage, Integer pageSize, String queryString);
+
+    Map<String, Object> getMemberCountBySex();
+
+    Map<String, Object> getMemberReportAge();
+
 }

@@ -54,4 +54,26 @@
             WHERE CODE = #{value} OR NAME = #{value}
         </if>
     </select>
+
+
+    <!--根据性别统计会员数量-->
+    <select id="getMemberCountBySex" resultType="map">
+        SELECT COUNT(*)/(SELECT COUNT(*) FROM `t_member`) value,sex name FROM `t_member` GROUP BY sex;
+    </select>
+
+    <!--根据年龄段查询各个年龄段的人数-->
+    <select id="getMemberReportAge" resultType="map">
+        SELECT ageproportion AS 'name',COUNT(*) AS 'value' FROM
+        (
+        SELECT
+        CASE
+        WHEN t.age >= 0 AND t.age &lt;= 18 THEN '0-18'
+        WHEN t.age > 18 AND t.age &lt;= 30 THEN '19-30'
+        WHEN t.age > 31 AND t.age &lt;= 45 THEN '31-45'
+        WHEN t.age > 45 AND t.age &lt;= 60 THEN '46-60'
+        ELSE '60-'
+        END
+        AS ageproportion FROM (SELECT id,DATEDIFF(CURDATE(),`birthday`)/365.2422 age FROM `t_member`) AS t
+        )a GROUP BY ageproportion
+    </select>
 </mapper>

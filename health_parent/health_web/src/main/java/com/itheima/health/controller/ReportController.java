@@ -207,4 +207,27 @@ public class ReportController {
             return new Result(false,MessageConstant.GET_MEMBER_NUMBER_REPORT_FAIL);
         }
     }
+    //会员数量性别占比统计(饼图)
+    @RequestMapping(value = "/getMemberCountBySex")
+    public Result getMemberCountBySex() {
+        try {
+            Map<String,Object> map = memberService.getMemberCountBySex();
+            return new Result(true,MessageConstant.GET_MEMBER_NUMBER_REPORT_SUCCESS,map);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false,MessageConstant.GET_MEMBER_NUMBER_REPORT_FAIL);
+        }
+    }
+
+    //会员数量各年龄段占比
+    @RequestMapping(value = "/getMemberReportAge")
+    public Result getMemberReportAge() {
+        try {
+            Map<String,Object> map = memberService.getMemberReportAge();
+            return new Result(true,MessageConstant.GET_MEMBER_NUMBER_REPORT_SUCCESS,map);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false,MessageConstant.GET_MEMBER_NUMBER_REPORT_FAIL);
+        }
+    }
 }
