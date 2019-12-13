@@ -17,4 +17,6 @@ public interface UserService {
     User findById(Integer id);
 
     List<Integer> findRoleIdsByCheckGroupId(Integer id);
+
+    void add(User user, Integer[] permissionIds);
 }

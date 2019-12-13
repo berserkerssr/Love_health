@@ -6,6 +6,7 @@ import com.itheima.health.pojo.Menu;
 import com.itheima.health.pojo.User;
 
 import java.util.List;
+import java.util.Map;
 
 public interface UserDao {
 
@@ -20,4 +21,8 @@ public interface UserDao {
     User findById(Integer id);
 
     List<Integer> findRoleIdsByCheckGroupId(Integer id);
+
+    void add(User user);
+
+    void setRoleAndPermission(Map<String, Object> map);
 }
