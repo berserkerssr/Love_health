@@ -72,4 +72,12 @@ public class MessageConstant {
     public static final String QUERY_PERMISSION_EDIT_FAIL ="查询编辑失败";
     public static final String DELETE_PERMISSION_FAIL ="权限删除失败";
     public static final String DELETE_PERMISSION_SUCCESS ="权限删除成功";
+    public static final String ADD_MENU_SUCCESS ="新建菜单成功";
+    public static final String ADD_MENU_FAIL ="新建菜单失败";
+    public static final String QUERY_MENU_SUCCESS="查询菜单成功";
+    public static final String QUERY_MENU_FAIL="查询菜单失败";
+    public static final String QUERY_MENU_LIST_SUCCESS="查询菜单列表成功";
+    public static final String QUERY_MENU_LIST_FAIL="查询菜单列表失败";
+    public static final String QUERY_PERMISSION_LIST_SUCCESS="查询权限列表成功";
+    public static final String QUERY_PERMISSION_LIST_FAIL="查询权限列表失败";
 }

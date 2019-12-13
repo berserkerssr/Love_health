@@ -10,5 +10,10 @@
             WHERE NAME like '%${value}%'
         </if>
     </select>
-
+    <insert id="add" parameterType="menu">
+     insert into t_menu (name,linkUrl,path,priority,description,icon,parentMenuId) values (#{name}, #{linkUrl}, #{path}, #{priority}, #{description}, #{icon}, #{parentMenuId})
+    </insert>
+    <select id="findAll" resultType="menu">
+        select * from t_menu
+    </select>
 </mapper>

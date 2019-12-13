@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 /**
  * @author TALON WAT
  * @date 2019-12-12 16:31
@@ -77,6 +79,17 @@ public class PermissionController {
         }  catch(Exception e) {
             e.printStackTrace();
             return new Result(false,MessageConstant.DELETE_PERMISSION_FAIL);
+        }
+    }
+    // 查询所有检查项
+    @RequestMapping(value = "/findAll")
+    public Result findAll(){
+        List<Permission> list = permissionService.findAlls();
+        if(list!=null && list.size()>0){
+            return new Result(true,MessageConstant.QUERY_PERMISSION_LIST_SUCCESS,list);
+        }
+        else{
+            return new Result(false,MessageConstant.QUERY_PERMISSION_LIST_FAIL);
         }
     }
 

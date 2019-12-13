@@ -19,4 +19,6 @@ public interface PermissionDao {
     void edit(Permission permission);
 
     void deleteById(Integer id);
+
+    List<Permission> findAlls();
 }

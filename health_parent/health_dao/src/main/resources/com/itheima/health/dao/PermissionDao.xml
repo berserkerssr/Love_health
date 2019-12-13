@@ -44,4 +44,7 @@
     <delete id="deleteById" parameterType="int">
         DELETE FROM t_permission WHERE id=#{value }
     </delete>
+    <select id="findAlls" resultType="permission">
+        select * from t_permission
+    </select>
 </mapper>
