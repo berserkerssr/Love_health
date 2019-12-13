@@ -5,6 +5,7 @@ import com.itheima.health.constant.MessageConstant;
 import com.itheima.health.entity.PageResult;
 import com.itheima.health.entity.QueryPageBean;
 import com.itheima.health.entity.Result;
+import com.itheima.health.pojo.CheckGroup;
 import com.itheima.health.pojo.CheckItem;
 import com.itheima.health.pojo.Permission;
 import com.itheima.health.service.PermissionService;
@@ -53,6 +54,29 @@ public class PermissionController {
         }
         else{
             return new Result(false,MessageConstant.QUERY_PERMISSION_FAIL);
+        }
+    }
+    @RequestMapping(value = "/edit")
+    //@PreAuthorize(value = "hasAuthority('CHECKITEM_EDIT')")
+    public Result edit(@RequestBody Permission permission){
+        try {
+            permissionService.edit(permission);
+            return new Result(true, MessageConstant.QUERY_PERMISSION_EDIT_SUCCESS);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false,MessageConstant.QUERY_PERMISSION_EDIT_FAIL);
+        }
+    }
+    // 删除检查项
+    @RequestMapping(value = "/delete")
+    //@PreAuthorize(value = "hasAuthority('CHECKITEM_DELETE_ABC')")
+    public Result deleteById(Integer id){
+        try {
+            permissionService.deleteById(id);
+            return new Result(true, MessageConstant.DELETE_PERMISSION_SUCCESS);
+        }  catch(Exception e) {
+            e.printStackTrace();
+            return new Result(false,MessageConstant.DELETE_PERMISSION_FAIL);
         }
     }
 

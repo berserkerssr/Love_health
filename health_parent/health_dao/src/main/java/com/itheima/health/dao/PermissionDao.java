@@ -15,4 +15,8 @@ public interface PermissionDao {
     void add(Permission permission);
 
     Permission findById(Integer id);
+
+    void edit(Permission permission);
+
+    void deleteById(Integer id);
 }

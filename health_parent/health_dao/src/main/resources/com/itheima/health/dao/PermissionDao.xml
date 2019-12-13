@@ -26,4 +26,22 @@
     <select id="findById" parameterType="int" resultType="permission">
        SELECT * FROM t_permission WHERE id=#{value}
     </select>
+    <update id="edit" parameterType="permission">
+    UPDATE t_permission
+    <set>
+        <if test="name!=null and name.length>0">
+            name = #{name},
+        </if>
+        <if test="keyword!=null and keyword.length>0">
+            keyword = #{keyword},
+        </if>
+        <if test="description!=null and description.length>0">
+            description = #{description},
+        </if>
+    </set>
+    where id = #{id}
+    </update>
+    <delete id="deleteById" parameterType="int">
+        DELETE FROM t_permission WHERE id=#{value }
+    </delete>
 </mapper>

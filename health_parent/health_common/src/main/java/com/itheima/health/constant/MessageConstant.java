@@ -68,4 +68,8 @@ public class MessageConstant {
     public static final String GET_SETMEAL_LIST_FAIL = "查询套餐列表数据失败";
     public static final String QUERY_PERMISSION_SUCCESS ="查询权限成功";
     public static final String QUERY_PERMISSION_FAIL ="查询权限失败";
+    public static final String QUERY_PERMISSION_EDIT_SUCCESS ="查询编辑成功";
+    public static final String QUERY_PERMISSION_EDIT_FAIL ="查询编辑失败";
+    public static final String DELETE_PERMISSION_FAIL ="权限删除失败";
+    public static final String DELETE_PERMISSION_SUCCESS ="权限删除成功";
 }
