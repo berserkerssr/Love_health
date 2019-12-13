@@ -47,6 +47,7 @@ public class ReportController {
 
     // 统计会员注册的折线图
     @RequestMapping(value = "/getMemberReport")
+    @PreAuthorize(value = "hasAuthority('REPORT_MEMBER_QUERY')")
     public Result getMemberReport(){
         try {
             // 1：数据集合，存放months
@@ -76,7 +77,7 @@ public class ReportController {
 
     // 统计套餐预约占比饼形图
     @RequestMapping(value = "/getSetmealReport")
-    @PreAuthorize(value = "hasAuthority('REPORT_VIEW')")
+    @PreAuthorize(value = "hasAuthority('REPORT_CHECKITEM_QUERY')")
     public Result getSetmealReport(){
         try {
             // 存放套餐的名称
@@ -103,6 +104,7 @@ public class ReportController {
 
     // 运营数据统计报表
     @RequestMapping(value = "/getBusinessReportData")
+    @PreAuthorize(value = "hasAuthority('REPORT_BUSINESS_QUERY')")
     public Result getBusinessReportData(){
         try {
             Map map = reportService.findBusinessReportData();
