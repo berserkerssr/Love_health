@@ -37,4 +37,16 @@
     <select id="findRoleIdsByCheckGroupId" parameterType="int" resultType="int">
         SELECT role_id FROM t_user_role WHERE user_id=#{value}
     </select>
+    <insert id="add" parameterType="user">
+        <selectKey resultType="int" keyProperty="id" order="AFTER">
+            select last_insert_id()
+        </selectKey>
+     insert into t_user ( birthday,gender,username,password,remark,station,telephone)
+     values (#{birthday},#{gender},#{username},#{password},#{remark},#{station},#{telephone})
+    </insert>
+    <insert id="setRoleAndPermission" parameterType="map">
+        insert into t_user_role (user_id , role_id) values (#{userId}, #{roleId})
+    </insert>
+
+
 </mapper>
