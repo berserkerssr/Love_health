@@ -12,6 +12,7 @@ import com.itheima.health.entity.Result;
 import com.itheima.health.pojo.CheckItem;
 import com.itheima.health.pojo.Role;
 import com.itheima.health.service.RoleService;
+import jdk.internal.org.objectweb.asm.tree.analysis.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,7 +32,7 @@ public class RoleController {
 
     // 分页查询检查项列表
     @RequestMapping(value = "/findPage")
-    //@PreAuthorize(value = "hasAuthority('ROLE_QUERY')")
+    @PreAuthorize(value = "hasAuthority('ROLE_QUERY')")
     public PageResult findPage(@RequestBody QueryPageBean queryPageBean){
         PageResult pageResult = roleService.findPage(queryPageBean.getCurrentPage(),
                 queryPageBean.getPageSize(),
@@ -67,6 +68,7 @@ public class RoleController {
 
     // 新增角色
     @RequestMapping(value = "/add")
+    @PreAuthorize(value="hasAuthority('ROLE_ADD')")
     public Result add(@RequestBody Role role, Integer [] permissionIds, Integer [] menuIds){
         try {
             roleService.add(role,permissionIds,menuIds);
@@ -79,6 +81,7 @@ public class RoleController {
 
     // 编辑角色
     @RequestMapping(value = "/edit")
+    @PreAuthorize(value="hasAuthority('ROLE_EDIT')")
     public Result edit(@RequestBody Role role, Integer [] permissionIds, Integer [] menuIds){
         try {
             roleService.edit(role,permissionIds,menuIds);
@@ -91,6 +94,7 @@ public class RoleController {
 
     // 删除角色
     @RequestMapping(value = "/deleteById")
+    @PreAuthorize(value="hasAuthority('ROLE_DELETE')")
     //@PreAuthorize(value = "hasAuthority('CHECKITEM_DELETE_ABC')")
     public Result deleteById(Integer id){
         try {
