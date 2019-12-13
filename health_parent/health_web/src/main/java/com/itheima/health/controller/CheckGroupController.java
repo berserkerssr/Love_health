@@ -7,6 +7,7 @@ import com.itheima.health.entity.QueryPageBean;
 import com.itheima.health.entity.Result;
 import com.itheima.health.pojo.CheckGroup;
 import com.itheima.health.service.CheckGroupService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,6 +31,7 @@ public class CheckGroupController {
 
     // 新增检查组
     @RequestMapping(value = "/add")
+    @PreAuthorize(value="hasAuthority('CHECKGROUP_ADD')")
     public Result add(@RequestBody CheckGroup checkGroup, Integer [] checkitemIds){
         try {
             checkGroupService.add(checkGroup,checkitemIds);
@@ -42,6 +44,7 @@ public class CheckGroupController {
 
     // 分页查询检查项列表
     @RequestMapping(value = "/findPage")
+    @PreAuthorize(value = "hasAuthority('CHECKGROUP_QUERY')")
     public PageResult findPage(@RequestBody QueryPageBean queryPageBean){
         PageResult pageResult = checkGroupService.findPage(queryPageBean.getCurrentPage(),
                 queryPageBean.getPageSize(),
@@ -70,6 +73,7 @@ public class CheckGroupController {
 
     // 编辑检查组
     @RequestMapping(value = "/edit")
+    @PreAuthorize(value = "hasAuthority('CHECKGROUP_EDIT')")
     public Result edit(@RequestBody CheckGroup checkGroup, Integer [] checkitemIds){
         try {
             checkGroupService.edit(checkGroup,checkitemIds);
