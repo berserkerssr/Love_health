@@ -90,4 +90,24 @@ public class UserServiceImpl implements UserService{
     public List<Integer> findRoleIdsByCheckGroupId(Integer id) {
         return userDao.findRoleIdsByCheckGroupId(id) ;
     }
+
+    @Override
+    public void add(User user, Integer[] roleIds) {
+        //增加role
+        userDao.add(user);
+
+        //增加 role permission 关联
+        this.setRoleAndPermission(user.getId(),roleIds);
+    }
+
+    private void setRoleAndPermission(Integer userId, Integer[] roleIds) {
+        if(roleIds!=null && roleIds.length>0){
+            for (Integer roleId : roleIds) {
+                Map<String,Object> map = new HashMap<>();
+                map.put("userId",userId);
+                map.put("roleId",roleId);
+                userDao.setRoleAndPermission(map);
+            }
+        }
+    }
 }
