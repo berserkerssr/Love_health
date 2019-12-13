@@ -29,6 +29,7 @@
             overflow: hidden;
             flex: 1 1 0%;
         }
+
         .datatable td, .datatable th {
             padding: 12px 0;
             min-width: 0;
@@ -44,7 +45,9 @@
 <body class="hold-transition">
 <div id="app">
     <div class="content-header">
-        <h1>系统管理<small>用户管理</small></h1>
+        <h1>系统管理
+            <small>用户管理</small>
+        </h1>
         <el-breadcrumb separator-class="el-icon-arrow-right" class="breadcrumb">
             <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
             <el-breadcrumb-item>系统管理</el-breadcrumb-item>
@@ -54,7 +57,8 @@
     <div class="app-container">
         <div class="box">
             <div class="filter-container">
-                <el-input placeholder="用户名/角色" v-model="pagination.queryString" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter"></el-input>
+                <el-input placeholder="用户名/角色" v-model="pagination.queryString" style="width: 200px;"
+                          class="filter-item" @keyup.enter.native="handleFilter"></el-input>
                 <el-button @click="findPage()" class="dalfBut">查询</el-button>
                 <el-button type="primary" class="butT" @click="handleCreate()">新建</el-button>
             </div>
@@ -259,20 +263,20 @@
 <script>
     var vue = new Vue({
         el: '#app',
-        data:{
-            activeName:'first',//添加/编辑窗口Tab标签名称
+        data: {
+            activeName: 'first',//添加/编辑窗口Tab标签名称
             pagination: {//分页相关属性
                 currentPage: 1,
-                pageSize:10,
-                total:100,
-                queryString:null,
+                pageSize: 10,
+                total: 100,
+                queryString: null,
             },
             dataList: [],//列表数据
             formData: {},//表单数据
-            tableData:[],//新增和编辑表单中对应的检查项列表数据
-            roleIds:[],
+            tableData: [],//新增和编辑表单中对应的检查项列表数据
+            roleIds: [],
             dialogFormVisible: false,//控制添加窗口显示/隐藏
-            dialogFormVisible4Edit:false//控制编辑窗口显示/隐藏
+            dialogFormVisible4Edit: false//控制编辑窗口显示/隐藏
         },
         created() {
             this.findPage();
@@ -280,67 +284,74 @@
         methods: {
             //编辑
             handleEdit() {
-                axios.post("/user/edit.do?roleIds="+this.roleIds,this.formData).then((res)=>{
+                axios.post("/user/edit.do?roleIds=" + this.roleIds, this.formData).then((res) => {
                     this.dialogFormVisible4Edit = false;
 
-                    if (res.data.flag){
+                    if (res.data.flag) {
                         this.$message({
                             message: res.data.message,
                             type: 'success'
                         });
-                    }else {
+                    } else {
                         this.$message.error(res.data.message);
                     }
-                }).finally(()=>{
+                }).catch((error)=>{
+                    alert(error);
+                    this.showError(error);
+                }).finally(() => {
                     this.findPage();
                 })
             },
             //添加
-            handleAdd () {
-                axios.post("/user/add.do?roleIds="+this.roleIds,this.formData).then((res)=>{
+            handleAdd() {
+                axios.post("/user/add.do?roleIds=" + this.roleIds, this.formData).then((res) => {
                     this.dialogFormVisible = false;
-                    if (res.data.flag){
+                    if (res.data.flag) {
                         this.$message({
                             message: res.data.message,
                             type: 'success'
                         });
-                    }else {
+                    } else {
                         this.$message.error(res.data.message);
                     }
-                }).finally(()=>{
+                }).catch((error)=>{
+                    this.showError(error)
+                }).finally(() => {
                     this.findPage();
                 })
             },
             //分页查询
             findPage() {
                 var param = {
-                    currentPage:this.pagination.currentPage,//页码
-                    pageSize:this.pagination.pageSize,//每页显示的记录数
-                    queryString:this.pagination.queryString//查询条件
+                    currentPage: this.pagination.currentPage,//页码
+                    pageSize: this.pagination.pageSize,//每页显示的记录数
+                    queryString: this.pagination.queryString//查询条件
                 };
-                axios.post("/user/findPage.do",param).then((res)=>{
-                    this.dataList=res.data.rows;
-                    this.pagination.total=res.data.total;
-                }).finally(()=>{
+                axios.post("/user/findPage.do", param).then((res) => {
+                    this.dataList = res.data.rows;
+                    this.pagination.total = res.data.total;
+                }).catch((error)=>{
+                    this.showError(error)
+                }).finally(() => {
 
                 })
             },
             // 重置表单
             resetForm() {
-                this.formData={};
+                this.formData = {};
             },
             // 弹出添加窗口
             handleCreate() {
                 this.resetForm();
-                this.dialogFormVisible=true;
+                this.dialogFormVisible = true;
                 //默认切换到第一个标签页（基本信息）
-                this.activeName='first';
+                this.activeName = 'first';
                 //重置
                 this.roleIds = [];
-                axios.get("/role/findAll.do").then((res)=>{
-                    if (res.data.flag){
+                axios.get("/role/findAll.do").then((res) => {
+                    if (res.data.flag) {
                         this.tableData = res.data.data;
-                    }else {
+                    } else {
                         this.$message.error(res.data.message);
                     }
                 });
@@ -348,29 +359,29 @@
             // 弹出编辑窗口
             handleUpdate(row) {
                 //alert(row.id);
-                axios.get("/user/findById.do?id="+row.id).then((res)=>{
-                    if (res.data.flag){
-                        this.dialogFormVisible4Edit=true;
-                        this.activeName='first';
-                        this.formData=res.data.data;
-                        axios.get("/role/findAll.do").then((res)=>{
-                            if (res.data.flag){
+                axios.get("/user/findById.do?id=" + row.id).then((res) => {
+                    if (res.data.flag) {
+                        this.dialogFormVisible4Edit = true;
+                        this.activeName = 'first';
+                        this.formData = res.data.data;
+                        axios.get("/role/findAll.do").then((res) => {
+                            if (res.data.flag) {
                                 this.tableData = res.data.data;
-                                axios.get("/user/findRoleIdsByCheckGroupId.do?id="+row.id).then((res)=>{
-                                    this.roleIds=res.data;
+                                axios.get("/user/findRoleIdsByCheckGroupId.do?id=" + row.id).then((res) => {
+                                    this.roleIds = res.data;
                                 })
-                            }else {
+                            } else {
                                 this.$message.error(res.data.message);
                             }
                         })
-                    }else {
+                    } else {
                         this.$message.error(res.data.message);
                     }
                 })
             },
             //切换页码
             handleCurrentChange(currentPage) {
-                this.pagination.currentPage=currentPage;
+                this.pagination.currentPage = currentPage;
                 this.findPage();
             },
             // 删除
@@ -382,22 +393,22 @@
                     center: true
                 }).then(() => {
                     // 使用axios完成删除
-                    axios.get("/user/deleteById.do?id="+row.id).then((response)=>{
+                    axios.get("/user/deleteById.do?id=" + row.id).then((response) => {
                         // 返回Result(flag,message,data)
-                        if(response.data.flag){
+                        if (response.data.flag) {
                             this.$message({
-                                type:"success",
-                                message:response.data.message
+                                type: "success",
+                                message: response.data.message
                             })
-                        }else{
+                        } else {
                             this.$message({
-                                type:"error",
-                                message:response.data.message
+                                type: "error",
+                                message: response.data.message
                             })
                         }
                         // 刷新页面
                         this.findPage();
-                    }).catch((error)=>{
+                    }).catch((error) => {
                         // 捕获后台的异常
                         this.showError(error);
                     })
@@ -407,6 +418,16 @@
                         message: '已取消删除'
                     });
                 });
+            },
+            //捕获异常
+            showError(e) {
+                if (e =='Error: Request failed with status code 403') {
+                    this.$message.error("权限不足")
+                    return;
+                } else {
+                    this.$message.error("非法操作，请联系管理员")
+                    return;
+                }
             }
         }
     })
