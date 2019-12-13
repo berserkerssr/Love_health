@@ -6,6 +6,7 @@ import com.itheima.health.entity.Result;
 import com.itheima.health.pojo.OrderSetting;
 import com.itheima.health.service.OrderSettingService;
 import com.itheima.health.utils.POIUtils;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -58,6 +59,7 @@ public class OrderSettingController {
 
     // 初始化日历中的预约设置信息，根据当前年月时间完成初始化
     @RequestMapping(value = "/findOrderSettingByOrderDate")
+    @PreAuthorize(value = "hasAuthority('ORDERSETTING')")
     public Result findOrderSettingByOrderDate(String date){
         try {
             List<Map> list = orderSettingService.findOrderSettingByOrderDate(date);

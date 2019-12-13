@@ -10,6 +10,7 @@ import com.itheima.health.pojo.Setmeal;
 import com.itheima.health.service.SetmealService;
 import com.itheima.health.utils.QiniuUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -58,6 +59,7 @@ public class SetmealController {
 
     // 新增套餐
     @RequestMapping(value = "/add")
+    @PreAuthorize(value = "hasAuthority('SETMEAL_ADD')")
     public Result add(@RequestBody Setmeal setmeal, Integer [] checkgroupIds){
         try {
             setmealService.add(setmeal,checkgroupIds);
@@ -70,6 +72,7 @@ public class SetmealController {
 
     // 分页查询套餐列表
     @RequestMapping(value = "/findPage")
+    @PreAuthorize(value = "hasAuthority('SETMEAL_QUERY')")
     public PageResult findPage(@RequestBody QueryPageBean queryPageBean){
         PageResult pageResult = setmealService.findPage(queryPageBean.getCurrentPage(),
                 queryPageBean.getPageSize(),
