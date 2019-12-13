@@ -45,4 +45,13 @@
     <select id="findMonthMemberCountByRegTime" resultType="int">
         SELECT COUNT(*) FROM t_member WHERE regTime between #{begin} and #{end}
     </select>
+
+    <!--分页查询：注意使用动态sql获取参数的时候，需要使用value-->
+    <select id="findByCondition" parameterType="string" resultType="member">
+        <!--SELECT * FROM t_checkitem WHERE CODE = #{abc} OR NAME = #{abc}-->
+        SELECT * FROM t_member
+        <if test="value!=null and value.length>0">
+            WHERE CODE = #{value} OR NAME = #{value}
+        </if>
+    </select>
 </mapper>
