@@ -74,10 +74,9 @@ public class ReportController {
         }
     }
 
-
     // 统计套餐预约占比饼形图
     @RequestMapping(value = "/getSetmealReport")
-    @PreAuthorize(value = "hasAuthority('REPORT_CHECKITEM_QUERY')")
+    @PreAuthorize(value = "hasAuthority('REPORT_SETMEAL_QUERY')")
     public Result getSetmealReport(){
         try {
             // 存放套餐的名称
@@ -192,6 +191,7 @@ public class ReportController {
 
     //根据时间段展示会员数量
     @RequestMapping(value = "/getMemberReportAdd")
+    @PreAuthorize(value = "hasAuthority('REPORT_VIEW_TIME')")
     public Result getMemberReportAdd(@RequestBody Map<String,Object> mapDate){
         String startTime = (String) mapDate.get("startTime");
         String endTime = (String) mapDate.get("endTime");
@@ -211,8 +211,10 @@ public class ReportController {
             return new Result(false,MessageConstant.GET_MEMBER_NUMBER_REPORT_FAIL);
         }
     }
+
     //会员数量性别占比统计(饼图)
     @RequestMapping(value = "/getMemberCountBySex")
+    @PreAuthorize(value = "hasAuthority('REPORT_VIEW_MEMBER_SEX')")
     public Result getMemberCountBySex() {
         try {
             Map<String,Object> map = memberService.getMemberCountBySex();
@@ -225,6 +227,7 @@ public class ReportController {
 
     //会员数量各年龄段占比
     @RequestMapping(value = "/getMemberReportAge")
+    @PreAuthorize(value = "hasAuthority('REPORT_VIEW_MEMBER_AGE')")
     public Result getMemberReportAge() {
         try {
             Map<String,Object> map = memberService.getMemberReportAge();

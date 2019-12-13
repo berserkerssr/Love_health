@@ -54,7 +54,7 @@ public class CheckItemController {
 
     // 删除检查项
     @RequestMapping(value = "/deleteById")
-    @PreAuthorize(value = "hasAuthority('CHECKITEM_DELETE_ABC')")
+    @PreAuthorize(value = "hasAuthority('CHECKITEM_DELETE')")
     public Result deleteById(Integer id){
         try {
             checkItemService.deleteById(id);

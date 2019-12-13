@@ -5,14 +5,8 @@ import com.itheima.health.constant.MessageConstant;
 import com.itheima.health.entity.PageResult;
 import com.itheima.health.entity.QueryPageBean;
 import com.itheima.health.entity.Result;
-import com.itheima.health.pojo.CheckGroup;
-import com.itheima.health.pojo.CheckItem;
-import com.itheima.health.pojo.Role;
-import com.itheima.health.entity.Result;
-import com.itheima.health.pojo.CheckItem;
 import com.itheima.health.pojo.Role;
 import com.itheima.health.service.RoleService;
-import jdk.internal.org.objectweb.asm.tree.analysis.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -95,7 +89,6 @@ public class RoleController {
     // 删除角色
     @RequestMapping(value = "/deleteById")
     @PreAuthorize(value="hasAuthority('ROLE_DELETE')")
-    //@PreAuthorize(value = "hasAuthority('CHECKITEM_DELETE_ABC')")
     public Result deleteById(Integer id){
         try {
             roleService.deleteById(id);

@@ -341,7 +341,8 @@
                             })
                         }
                     }).catch((error)=>{
-
+                        // 捕获后台的异常
+                        this.showError(error);
                     })
                 },
                 //切换页码

@@ -160,9 +160,8 @@
                                 message:response.data.message
                             })
                         }
-
                     }).catch((error)=>{
-
+                        this.showMessage(error);
                     })
                 },
 				//预约设置
@@ -201,7 +200,7 @@
                                 })
                             }
                         }).catch((error)=>{
-
+                            this.showMessage(error);
                         })
                     }).catch(() => {
                         this.$message({
@@ -332,6 +331,16 @@
                     var d = day;
                     if (d < 10) d = "0" + d;
                     return y + "-" + m + "-" + d
+                },
+                showMessage(r){
+                    if(r == 'Error: Request failed with status code 403'){
+                        //权限不足
+                        this.$message.error('权限不足');
+                        return;
+                    } else{
+                        this.$message.error('未知错误');
+                        return;
+                    }
                 }
             }
         })

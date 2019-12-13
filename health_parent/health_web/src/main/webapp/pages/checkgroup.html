@@ -299,7 +299,7 @@
                             })
                         }
                     }).catch((error)=>{
-
+                        this.showError(error);
                     }).finally(()=>{
                         // 刷新列表页面
                         this.findPage();
@@ -323,12 +323,13 @@
                             })
                         }
                     }).catch((error)=>{
-
+                        this.showError(error);
                     }).finally(()=>{
                         // 刷新查询列表
                         this.findPage();
                     })
                 },
+
                 //分页查询
                 findPage() {
                     // 传递参数QueryPageBean
@@ -341,8 +342,11 @@
                     axios.post("/checkgroup/findPage.do",params).then((response)=>{
                         this.pagination.total = response.data.total;
                         this.dataList = response.data.rows;
+                    }).catch((error)=>{
+                        this.showError(error);
                     })
                 },
+
                 // 重置表单
                 resetForm() {
                     // 重置新增页面表单
@@ -352,6 +356,7 @@
                     // 重置第二个选项卡中的检查项的复选框为空
                     this.checkitemIds = [];
                 },
+
                 // 弹出添加窗口
                 handleCreate() {
                     // 重置页表表单
@@ -413,7 +418,7 @@
                                     this.$message.error(response.data.message);
                                 }
                             }).catch((error)=>{
-
+                                this.showError(error);
                             })
                         }
                         else{
@@ -431,8 +436,22 @@
                     this.pagination.currentPage = currentPage;
                     this.findPage();
                 },
+
                 // 删除
                 handleDelete(row) {
+                },
+
+                // 捕获异常
+                showError(e){
+                    if(e == 'Error: Request failed with status code 403'){
+                        this.$message.error("权限不足")
+                        return;
+                    }
+                    else{
+                        this.$message.error("非法操作，请联系管理员！")
+                        return;
+                    }
+                    // alert(e);
                 }
             }
         })

@@ -113,20 +113,34 @@
                     thisWeekVisitsNumber :0,
                     thisMonthOrderNumber :0,
                     thisMonthVisitsNumber :0,
-                    hotSetmeal :[
-                        {name:'阳光爸妈升级肿瘤12项筛查（男女单人）体检套餐',setmeal_count:200,proportion:0.222},
-                        {name:'阳光爸妈升级肿瘤12项筛查体检套餐',setmeal_count:200,proportion:0.222}
-                    ]
+                    hotSetmeal :[]
                 }
             },
             created() {
-                axios.get("/report/getBusinessReportData.do").then((res)=>{
-                    this.reportData = res.data.data;
-                });
+                this.report();
             },
             methods:{
                 exportExcel(){
                     window.location.href = '/report/exportBusinessReport.do';
+                },
+                report(){
+                    axios.get("/report/getBusinessReportData.do").then((res)=>{
+                        if (res.data.flag){
+                            this.reportData = res.data.data;
+                        }
+                    }).catch((error)=>{
+                        this.showMessage(error);
+                    });
+                },
+                showMessage(r){
+                    if(r == 'Error: Request failed with status code 403'){
+                        //权限不足
+                        this.$message.error('权限不足');
+                        return;
+                    }else{
+                        this.$message.error('未知错误');
+                        return;
+                    }
                 }
             }
         })
