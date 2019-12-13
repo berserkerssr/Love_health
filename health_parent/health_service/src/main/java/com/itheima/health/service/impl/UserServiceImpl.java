@@ -1,7 +1,11 @@
 package com.itheima.health.service.impl;
 
 import com.alibaba.dubbo.config.annotation.Service;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.itheima.health.dao.UserDao;
+import com.itheima.health.entity.PageResult;
+import com.itheima.health.pojo.CheckItem;
 import com.itheima.health.pojo.Menu;
 import com.itheima.health.pojo.User;
 import com.itheima.health.service.UserService;
@@ -65,5 +69,15 @@ public class UserServiceImpl implements UserService{
             mapMenu.add(map);
         }
         return mapMenu;
+    }
+
+    @Override
+    public PageResult findPage(Integer currentPage, Integer pageSize, String queryString) {
+        // 1：初始化分页的参数
+        PageHelper.startPage(currentPage,pageSize);
+        // 2：查询
+        Page<CheckItem> page = userDao.findByCondition(queryString);
+        // 3：封装PageResult数据
+        return new PageResult(page.getTotal(),page.getResult());
     }
 }

@@ -54,7 +54,7 @@
     <div class="app-container">
         <div class="box">
             <div class="filter-container">
-                <el-input placeholder=用户名/角色" v-model="pagination.queryString" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter"></el-input>
+                <el-input placeholder="用户名/角色" v-model="pagination.queryString" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter"></el-input>
                 <el-button @click="findPage()" class="dalfBut">查询</el-button>
                 <el-button type="primary" class="butT" @click="handleCreate()">新建</el-button>
             </div>
@@ -280,7 +280,7 @@
         methods: {
             //编辑
             handleEdit() {
-                axios.post("/checkgroup/edit.do?checkitemIds="+this.checkitemIds,this.formData).then((res)=>{
+                axios.post("/user/edit.do?checkitemIds="+this.checkitemIds,this.formData).then((res)=>{
                     this.dialogFormVisible4Edit = false;
 
                     if (res.data.flag){
@@ -297,7 +297,7 @@
             },
             //添加
             handleAdd () {
-                axios.post("/checkgroup/add.do?checkitemIds="+this.checkitemIds,this.formData).then((res)=>{
+                axios.post("/user/add.do?checkitemIds="+this.checkitemIds,this.formData).then((res)=>{
                     this.dialogFormVisible = false;
                     if (res.data.flag){
                         this.$message({
@@ -318,7 +318,7 @@
                     pageSize:this.pagination.pageSize,//每页显示的记录数
                     queryString:this.pagination.queryString//查询条件
                 };
-                axios.post("/checkgroup/findPage.do",param).then((res)=>{
+                axios.post("/user/findPage.do",param).then((res)=>{
                     this.dataList=res.data.rows;
                     this.pagination.total=res.data.total;
                 }).finally(()=>{

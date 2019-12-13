@@ -22,4 +22,13 @@
     <select id="findMenuListLevel2ByMenuId" parameterType="int" resultType="menu">
         select t2.* from t_menu t1,t_menu t2 where t1.`id` = t2.`parentMenuId` and t1.`id` = #{id};
     </select>
+
+    <!--分页查询：注意使用动态sql获取参数的时候，需要使用value-->
+    <select id="findByCondition" parameterType="string" resultType="user">
+        <!--SELECT * FROM t_checkitem WHERE CODE = #{abc} OR NAME = #{abc}-->
+        SELECT * FROM t_user
+        <if test="value!=null and value.length>0">
+            WHERE username like '%${value}%'
+        </if>
+    </select>
 </mapper>
