@@ -120,9 +120,9 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr v-for="c in tableData">
+                                        <tr v-for="c in tableDataP">
                                             <td>
-                                                <input :id="c.id" v-model="checkitemIds" type="checkbox" :value="c.id">
+                                                <input :id="c.id" v-model="permissionIds" type="checkbox" :value="c.id">
                                             </td>
                                             <td><label :for="c.id">{{c.name}}</label></td>
                                             <td><label :for="c.id">{{c.description}}</label></td>
@@ -142,9 +142,9 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr v-for="c in tableData1">
+                                        <tr v-for="c in tableDataM">
                                             <td>
-                                                <input :id="c.id" v-model="checkitemIds1" type="checkbox" :value="c.id">
+                                                <input :id="c.id" v-model="menuIds" type="checkbox" :value="c.id">
                                             </td>
                                             <td><label :for="c.id">{{c.name}}</label></td>
                                             <td><label :for="c.id">{{c.description}}</label></td>
@@ -201,9 +201,9 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr v-for="c in tableData">
+                                        <tr v-for="c in tableDataP">
                                             <td>
-                                                <input :id="c.id" v-model="checkitemIds" type="checkbox" :value="c.id">
+                                                <input :id="c.id" v-model="permissionIds" type="checkbox" :value="c.id">
                                             </td>
                                             <td><label :for="c.id">{{c.name}}</label></td>
                                             <td><label :for="c.id">{{c.description}}</label></td>
@@ -223,9 +223,9 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr v-for="c in tableData1">
+                                        <tr v-for="c in tableDataM">
                                             <td>
-                                                <input :id="c.id" v-model="checkitemIds1" type="checkbox" :value="c.id">
+                                                <input :id="c.id" v-model="menuIds" type="checkbox" :value="c.id">
                                             </td>
                                             <td><label :for="c.id">{{c.name}}</label></td>
                                             <td><label :for="c.id">{{c.description}}</label></td>
@@ -260,8 +260,13 @@
             },
             dataList: [],//列表数据
             formData: {},//表单数据
-            tableData:[],//新增和编辑表单中对应的检查项列表数据
-            checkitemIds:[],//新增和编辑表单中检查项对应的复选框，基于双向绑定可以进行回显和数据提交
+
+            tableDataP:[],//新增和编辑表单中对应的 ==权限== 列表数据
+            tableDataM:[],//新增和编辑表单中对应的 ==菜单== 列表数据
+
+            permissionIds:[],//新增和编辑表单中 ==权限== 对应的复选框，基于双向绑定可以进行回显和数据提交
+            menuIds:[],//新增和编辑表单中 ==菜单== 对应的复选框，基于双向绑定可以进行回显和数据提交
+
             dialogFormVisible: false,//控制添加窗口显示/隐藏
             dialogFormVisible4Edit:false//控制编辑窗口显示/隐藏
         },
@@ -272,9 +277,8 @@
         methods: {
             //编辑
             handleEdit() {
-                axios.post("/role/edit.do?checkitemIds="+this.checkitemIds,this.formData).then((res)=>{
+                axios.post("/role/edit.do?permissionIds="+this.permissionIds+"&menuIds="+this.menuIds,this.formData).then((res)=>{
                     this.dialogFormVisible4Edit = false;
-
                     if (res.data.flag){
                         this.$message({
                             message: res.data.message,
@@ -287,9 +291,10 @@
                     this.findPage();
                 })
             },
+
             //添加
             handleAdd () {
-                axios.post("/role/add.do?checkitemIds="+this.checkitemIds,this.formData).then((res)=>{
+                axios.post("/role/add.do?permissionIds="+this.permissionIds+"&menuIds="+this.menuIds,this.formData).then((res)=>{
                     this.dialogFormVisible = false;
                     if (res.data.flag){
                         this.$message({
@@ -303,6 +308,7 @@
                     this.findPage();
                 })
             },
+
             //分页查询
             findPage() {
                 var param = {
@@ -321,6 +327,7 @@
             resetForm() {
                 this.formData={};
             },
+
             // 弹出添加窗口
             handleCreate() {
                 this.resetForm();
@@ -328,15 +335,29 @@
                 //默认切换到第一个标签页（基本信息）
                 this.activeName='first';
                 //重置
-                this.checkitemIds = [];
-                axios.get("/checkitem/findAll.do").then((res)=>{
+                this.permissionIds = [];
+                this.menuIds = [];
+
+                //查询所有 ==权限信息
+                axios.get("/permission/findAll.do").then((res)=>{
                     if (res.data.flag){
-                        this.tableData = res.data.data;
+                        this.tableDataP = res.data.data;
                     }else {
                         this.$message.error(res.data.message);
                     }
                 });
+
+                //查询所有 ==菜单信息
+                axios.get("/menu/findAll.do").then((res)=>{
+                    if (res.data.flag){
+                        this.tableDataM = res.data.data;
+                    }else {
+                        this.$message.error(res.data.message);
+                    }
+                });
+
             },
+
             // 弹出编辑窗口
             handleUpdate(row) {
                 //alert(row.id);
@@ -345,11 +366,21 @@
                         this.dialogFormVisible4Edit=true;
                         this.activeName='first';
                         this.formData=res.data.data;
-                        axios.get("/checkitem/findAll.do").then((res)=>{
+                        axios.get("/permission/findAll.do").then((res)=>{
                             if (res.data.flag){
-                                this.tableData = res.data.data;
-                                axios.get("/role/findCheckItemIdsByCheckGroupId.do?id="+row.id).then((res)=>{
-                                    this.checkitemIds=res.data;
+                                this.tableDataP = res.data.data;
+                                axios.get("/role/findPermissionIdsByRoleId.do?id="+row.id).then((res)=>{
+                                    this.permissionIds=res.data;
+                                })
+                            }else {
+                                this.$message.error(res.data.message);
+                            }
+                        });
+                        axios.get("/menu/findAll.do").then((res)=>{
+                            if (res.data.flag){
+                                this.tableDataM = res.data.data;
+                                axios.get("/role/findMenuIdsByRoleId.do?id="+row.id).then((res)=>{
+                                    this.menuIds=res.data;
                                 })
                             }else {
                                 this.$message.error(res.data.message);
@@ -367,6 +398,38 @@
             },
             // 删除
             handleDelete(row) {
+                this.$confirm('此操作将删除角色项, 是否继续?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning',
+                    center: true
+                }).then(() => {
+                    // 使用axios完成删除
+                    axios.get("/role/deleteById.do?id="+row.id).then((response)=>{
+                        // 返回Result(flag,message,data)
+                        if(response.data.flag){
+                            this.$message({
+                                type:"success",
+                                message:response.data.message
+                            })
+                        }else{
+                            this.$message({
+                                type:"error",
+                                message:response.data.message
+                            })
+                        }
+                        // 刷新页面
+                        this.findPage();
+                    }).catch((error)=>{
+                        // 捕获后台的异常
+                        this.showError(error);
+                    })
+                }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '已取消删除'
+                    });
+                });
             }
         }
     })

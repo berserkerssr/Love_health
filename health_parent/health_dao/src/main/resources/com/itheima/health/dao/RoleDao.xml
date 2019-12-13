@@ -20,4 +20,78 @@
             WHERE NAME like '%${value}%'
         </if>
     </select>
+
+    <!--ID查询-->
+    <select id="findById" parameterType="int" resultType="role">
+        select * from t_role where id = #{id}
+    </select>
+
+    <!--使用角色ID，查询的权限ID集合-->
+    <select id="findPermissionIdsByRoleId" parameterType="int" resultType="int">
+        SELECT permission_id FROM t_role_permission WHERE role_id = #{id}
+    </select>
+
+    <!--使用角色ID，查询的菜单ID集合-->
+    <select id="findMenuIdsByRoleId" parameterType="int" resultType="int">
+        SELECT menu_id FROM t_role_menu WHERE role_id = #{id}
+    </select>
+
+    <!--新增角色，同时将新增数据的角色的id封装到role中的id属性-->
+    <insert id="add" parameterType="role">
+        <selectKey resultType="int" keyProperty="id" order="AFTER">
+            select last_insert_id()
+        </selectKey>
+        insert into t_role
+        (name,keyword,description)
+        values
+        (#{name},#{keyword},#{description})
+    </insert>
+
+    <!--新增role permission中间表，使用Map-->
+    <insert id="setRoleAndPermission" parameterType="map">
+        insert into t_role_permission
+        (role_id,permission_id) values(#{roleId},#{permissionId})
+    </insert>
+
+    <!--新增role menu中间表，使用Map-->
+    <insert id="setRoleAndMenu" parameterType="map">
+        insert into t_role_menu
+        (role_id,menu_id) values(#{roleId},#{menuId})
+    </insert>
+
+    <!--更新 role-->
+    <update id="update" parameterType="role">
+        update t_role
+        <set>
+            <if test=" name != null and name.length > 0">
+                name = #{name},
+            </if>
+            <if test=" keyword != null and keyword.length > 0">
+                keyword = #{keyword},
+            </if>
+            <if test=" description != null and description.length > 0">
+                description = #{description},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--使用id，删除 role permission 中间表数据-->
+    <delete id="removeRoleAndPermission" parameterType="int">
+        delete from t_role_permission where role_id = #{id}
+    </delete>
+
+    <!--使用id，删除 role menu 中间表数据-->
+    <delete id="removeRoleAndMenu" parameterType="int">
+        delete from t_role_menu where role_id = #{id}
+    </delete>
+
+    <select id="findRoleAndUserCountByRoleId" parameterType="int" resultType="long">
+        select count(*) from t_user_role where role_id = #{id}
+    </select>
+    
+    <delete id="deleteById" parameterType="int">
+        delete from t_role where id = #{id};
+    </delete>
+
 </mapper>

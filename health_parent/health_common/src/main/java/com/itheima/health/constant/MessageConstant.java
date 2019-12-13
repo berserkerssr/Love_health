@@ -84,4 +84,12 @@ public class MessageConstant {
     public static final String EDIT_MENU_FAIL="编辑菜单失败";
     public static final String DELETE_MENU_SUCCESS="菜单删除成功";
     public static final String DELETE_MENU_FAIL="菜单删除失败";
+    public static final String QUERY_ROLE_SUCCESS = "查询角色成功";
+    public static final String QUERY_ROLE_FAIL = "查询角色失败";
+    public static final String ADD_ROLE_SUCCESS = "增加角色成功";
+    public static final String ADD_ROLE_FAIL = "增加角色失败";
+    public static final String EDIT_ROLE_SUCCESS = "编辑角色成功";
+    public static final String EDIT_ROLE_FAIL = "编辑角色失败";
+    public static final String DELETE_ROLE_SUCCESS = "删除角色成功";
+    public static final String DELETE_ROLE_FAIL = "删除角色失败";
 }

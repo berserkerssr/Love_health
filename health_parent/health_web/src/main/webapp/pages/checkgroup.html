@@ -307,11 +307,6 @@
                 },
                 //添加
                 handleAdd () {
-                    // 传递检查组的基本信息 this.formData
-                    // 传递检查项列表中的检查项id的数组 this.checkitemIds
-                    //alert(this.checkitemIds);
-                    //alert(this.formData);
-                    //alert(JSON.stringify(this.formData));
                     axios.post("/checkgroup/add.do?checkitemIds="+this.checkitemIds,this.formData).then((response)=>{
                         // 返回Result(flag,message)
                         if(response.data.flag){
