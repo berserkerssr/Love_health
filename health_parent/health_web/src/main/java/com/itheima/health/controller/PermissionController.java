@@ -27,6 +27,7 @@ public class PermissionController {
     private PermissionService permissionService;
 
     @RequestMapping("/findPage")
+    @PreAuthorize(value = "hasAuthority('PERMISSION_QUERY')")
     public PageResult findPage(@RequestBody QueryPageBean queryPageBean){
         return permissionService.findAll(
                 queryPageBean.getCurrentPage(),
@@ -37,7 +38,7 @@ public class PermissionController {
 
     // 新增 权限项
     @RequestMapping(value = "/add")
-    @PreAuthorize(value = "hasAuthority('CHECKITEM_ADD')")
+    @PreAuthorize(value = "hasAuthority('PERMISSION_ADD')")
     public Result add(@RequestBody Permission permission){
         try {
             permissionService.add(permission);
@@ -59,7 +60,7 @@ public class PermissionController {
         }
     }
     @RequestMapping(value = "/edit")
-    //@PreAuthorize(value = "hasAuthority('CHECKITEM_EDIT')")
+    @PreAuthorize(value = "hasAuthority('PERMISSION_EDIT')")
     public Result edit(@RequestBody Permission permission){
         try {
             permissionService.edit(permission);
@@ -71,7 +72,7 @@ public class PermissionController {
     }
     // 删除检查项
     @RequestMapping(value = "/delete")
-    //@PreAuthorize(value = "hasAuthority('CHECKITEM_DELETE_ABC')")
+    @PreAuthorize(value = "hasAuthority('PERMISSION_DELETE')")
     public Result deleteById(Integer id){
         try {
             permissionService.deleteById(id);
