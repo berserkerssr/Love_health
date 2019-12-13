@@ -13,4 +13,8 @@ public interface UserService {
     List<Map<String, Object>> getMenuList(String username);
 
     PageResult findPage(Integer currentPage, Integer pageSize, String queryString);
+
+    User findById(Integer id);
+
+    List<Integer> findRoleIdsByCheckGroupId(Integer id);
 }

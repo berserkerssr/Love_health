@@ -12,6 +12,8 @@ import java.util.List;
 public interface RoleService {
     PageResult findPage(Integer currentPage, Integer pageSize, String queryString);
 
+    List<Role> findAll();
+
     Role findById(Integer id);
 
     List<Integer> findPermissionIdsByRoleId(Integer id);

@@ -5,6 +5,7 @@ import com.itheima.health.constant.MessageConstant;
 import com.itheima.health.entity.PageResult;
 import com.itheima.health.entity.QueryPageBean;
 import com.itheima.health.entity.Result;
+import com.itheima.health.pojo.CheckGroup;
 import com.itheima.health.service.UserService;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
@@ -68,6 +69,22 @@ public class UserController {
                 queryPageBean.getPageSize(),
                 queryPageBean.getQueryString());
         return pageResult;
+    }
+    @RequestMapping(value = "/findById")
+    public Result findById(Integer id){
+        com.itheima.health.pojo.User user = userService.findById(id);
+        if(user!=null){
+            return new Result(true, MessageConstant.QUERY_USER_SUCCESS,user);
+        }
+        else{
+            return new Result(false,MessageConstant.QUERY_USER_FAIL);
+        }
+    }
+
+    @RequestMapping(value = "/findRoleIdsByCheckGroupId")
+    public List<Integer> findRoleIdsByCheckGroupId(Integer id){
+        List<Integer> list  = userService.findRoleIdsByCheckGroupId(id);
+        return list;
     }
 
 }

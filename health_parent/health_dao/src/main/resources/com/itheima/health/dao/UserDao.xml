@@ -31,4 +31,10 @@
             WHERE username like '%${value}%'
         </if>
     </select>
+    <select id="findById" parameterType="int" resultType="user">
+         SELECT * FROM t_user WHERE id=#{value}
+    </select>
+    <select id="findRoleIdsByCheckGroupId" parameterType="int" resultType="int">
+        SELECT role_id FROM t_user_role WHERE user_id=#{value}
+    </select>
 </mapper>

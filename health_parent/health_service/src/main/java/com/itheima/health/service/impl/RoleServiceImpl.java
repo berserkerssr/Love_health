@@ -7,9 +7,13 @@ import com.itheima.health.dao.RoleDao;
 import com.itheima.health.entity.PageResult;
 import com.itheima.health.pojo.CheckItem;
 import com.itheima.health.pojo.Role;
+import com.itheima.health.service.CheckItemService;
+import com.itheima.health.pojo.Role;
 import com.itheima.health.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 import java.util.HashMap;
 import java.util.List;
@@ -24,6 +28,7 @@ import java.util.Map;
 public class RoleServiceImpl implements RoleService {
     @Autowired
     private RoleDao roleDao;
+
 
     @Override
     public PageResult findPage(Integer currentPage, Integer pageSize, String queryString) {
@@ -117,5 +122,10 @@ public class RoleServiceImpl implements RoleService {
                 roleDao.setRoleAndMenu(map);
             }
         }
+    }
+
+    @Override
+    public List<Role> findAll() {
+        return roleDao.findAll();
     }
 }

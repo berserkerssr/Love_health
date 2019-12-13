@@ -16,4 +16,8 @@ public interface UserDao {
     List<Menu> findMenuListLevel2ByMenuId(Integer id);
 
     Page<CheckItem> findByCondition(String queryString);
+
+    User findById(Integer id);
+
+    List<Integer> findRoleIdsByCheckGroupId(Integer id);
 }

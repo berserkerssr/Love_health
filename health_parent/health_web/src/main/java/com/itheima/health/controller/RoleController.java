@@ -8,6 +8,9 @@ import com.itheima.health.entity.Result;
 import com.itheima.health.pojo.CheckGroup;
 import com.itheima.health.pojo.CheckItem;
 import com.itheima.health.pojo.Role;
+import com.itheima.health.entity.Result;
+import com.itheima.health.pojo.CheckItem;
+import com.itheima.health.pojo.Role;
 import com.itheima.health.service.RoleService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -101,4 +104,14 @@ public class RoleController {
         }
     }
 
+    @RequestMapping(value = "/findAll")
+    public Result findAll(){
+        List<Role> list = roleService.findAll();
+        if(list!=null && list.size()>0){
+            return new Result(true, MessageConstant.QUERY_ROLE_LIST_SUCCESS,list);
+        }
+        else{
+            return new Result(false,MessageConstant.QUERY_ROLE_LIST_FAIL);
+        }
+    }
 }

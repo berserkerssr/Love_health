@@ -171,7 +171,7 @@
 
             <!-- 编辑标签弹层 -->
             <div class="add-form">
-                <el-dialog title="编辑检查组" :visible.sync="dialogFormVisible4Edit">
+                <el-dialog title="编辑用户" :visible.sync="dialogFormVisible4Edit">
                     <template>
                         <el-tabs v-model="activeName" type="card">
                             <el-tab-pane label="基本信息" name="first">
@@ -221,7 +221,7 @@
                                     </el-row>
                                 </el-form>
                             </el-tab-pane>
-                            <el-tab-pane label="检查项信息" name="second">
+                            <el-tab-pane label="角色信息" name="second">
                                 <div class="checkScrol">
                                     <table class="datatable">
                                         <thead>
@@ -270,7 +270,7 @@
             dataList: [],//列表数据
             formData: {},//表单数据
             tableData:[],//新增和编辑表单中对应的检查项列表数据
-            roleIds:[],//新增和编辑表单中检查项对应的复选框，基于双向绑定可以进行回显和数据提交
+            roleIds:[],
             dialogFormVisible: false,//控制添加窗口显示/隐藏
             dialogFormVisible4Edit:false//控制编辑窗口显示/隐藏
         },
@@ -337,7 +337,7 @@
                 this.activeName='first';
                 //重置
                 this.roleIds = [];
-                axios.get("/checkitem/findAll.do").then((res)=>{
+                axios.get("/role/findAll.do").then((res)=>{
                     if (res.data.flag){
                         this.tableData = res.data.data;
                     }else {
@@ -348,15 +348,15 @@
             // 弹出编辑窗口
             handleUpdate(row) {
                 //alert(row.id);
-                axios.get("/checkgroup/findById.do?id="+row.id).then((res)=>{
+                axios.get("/user/findById.do?id="+row.id).then((res)=>{
                     if (res.data.flag){
                         this.dialogFormVisible4Edit=true;
                         this.activeName='first';
                         this.formData=res.data.data;
-                        axios.get("/checkitem/findAll.do").then((res)=>{
+                        axios.get("/role/findAll.do").then((res)=>{
                             if (res.data.flag){
                                 this.tableData = res.data.data;
-                                axios.get("/checkgroup/findCheckItemIdsByCheckGroupId.do?id="+row.id).then((res)=>{
+                                axios.get("/user/findRoleIdsByCheckGroupId.do?id="+row.id).then((res)=>{
                                     this.roleIds=res.data;
                                 })
                             }else {

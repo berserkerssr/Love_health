@@ -6,6 +6,7 @@ import com.itheima.health.pojo.Role;
 
 import java.util.List;
 import java.util.Map;
+import java.util.List;
 import java.util.Set;
 
 public interface RoleDao {
@@ -35,4 +36,6 @@ public interface RoleDao {
     long findRoleAndUserCountByRoleId(Integer id);
 
     void deleteById(Integer id);
+
+    List<Role> findAll();
 }
