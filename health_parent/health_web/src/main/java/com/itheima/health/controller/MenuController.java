@@ -68,4 +68,27 @@ public class MenuController {
             return new Result(false,MessageConstant.QUERY_MENU_LIST_FAIL);
         }
     }
+    @RequestMapping(value = "/edit")
+    //@PreAuthorize(value = "hasAuthority('CHECKITEM_EDIT')")
+    public Result edit(@RequestBody Menu menu){
+        try {
+            menuService.edit(menu);
+            return new Result(true, MessageConstant.EDIT_MENU_SUCCESS);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false,MessageConstant.EDIT_MENU_FAIL);
+        }
+    }
+    // 删除检查项
+    @RequestMapping(value = "/delete")
+    //@PreAuthorize(value = "hasAuthority('CHECKITEM_DELETE_ABC')")
+    public Result deleteById(Integer id){
+        try {
+            menuService.deleteById(id);
+            return new Result(true, MessageConstant.DELETE_MENU_SUCCESS);
+        }  catch(Exception e) {
+            e.printStackTrace();
+            return new Result(false,MessageConstant.DELETE_MENU_FAIL);
+        }
+    }
 }

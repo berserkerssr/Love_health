@@ -17,4 +17,8 @@ public interface MenuService {
     Menu findById(Integer id);
 
     List<Menu> findAll();
+
+    void edit(Menu menu);
+
+    void deleteById(Integer id);
 }

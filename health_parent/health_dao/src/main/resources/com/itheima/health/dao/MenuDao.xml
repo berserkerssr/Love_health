@@ -16,4 +16,37 @@
     <select id="findAll" resultType="menu">
         select * from t_menu
     </select>
+    <select id="findById" parameterType="int" resultType="menu">
+         select * from t_menu where id = #{value}
+    </select>
+    <update id="edit" parameterType="menu">
+        update t_menu
+        <set>
+            <if test="name!=null and name.length>0">
+                name = #{name},
+            </if>
+            <if test="linkUrl!=null and linkUrl.length>0">
+                linkUrl = #{linkUrl},
+            </if>
+            <if test="path!=null and path.length>0">
+                path = #{path},
+            </if>
+            <if test="priority!=null">
+                priority = #{priority},
+            </if>
+            <if test="description!=null and description.length>0">
+                description = #{description},
+            </if>
+            <if test="icon!=null and icon.length>0">
+                icon = #{icon},
+            </if>
+            <if test="parentMenuId!=null">
+                parentMenuId = #{parentMenuId},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+    <delete id="deleteById" parameterType="int">
+         delete from t_menu where id = #{value}
+    </delete>
 </mapper>

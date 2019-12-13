@@ -151,7 +151,7 @@
                                         <tbody>
                                         <tr v-for="c in tableData">
                                             <td>
-                                                <input :id="c.id" v-model="checkitemIds" type="checkbox" :value="c.id">
+                                                <input :id="c.id" v-model="roleIds" type="checkbox" :value="c.id">
                                             </td>
                                             <td><label :for="c.id">{{c.name}}</label></td>
                                             <td><label :for="c.id">{{c.description}}</label></td>
@@ -234,7 +234,7 @@
                                         <tbody>
                                         <tr v-for="c in tableData">
                                             <td>
-                                                <input :id="c.id" v-model="checkitemIds" type="checkbox" :value="c.id">
+                                                <input :id="c.id" v-model="roleIds" type="checkbox" :value="c.id">
                                             </td>
                                             <td><label :for="c.id">{{c.name}}</label></td>
                                             <td><label :for="c.id">{{c.description}}</label></td>
@@ -270,7 +270,7 @@
             dataList: [],//列表数据
             formData: {},//表单数据
             tableData:[],//新增和编辑表单中对应的检查项列表数据
-            checkitemIds:[],//新增和编辑表单中检查项对应的复选框，基于双向绑定可以进行回显和数据提交
+            roleIds:[],//新增和编辑表单中检查项对应的复选框，基于双向绑定可以进行回显和数据提交
             dialogFormVisible: false,//控制添加窗口显示/隐藏
             dialogFormVisible4Edit:false//控制编辑窗口显示/隐藏
         },
@@ -280,7 +280,7 @@
         methods: {
             //编辑
             handleEdit() {
-                axios.post("/user/edit.do?checkitemIds="+this.checkitemIds,this.formData).then((res)=>{
+                axios.post("/user/edit.do?roleIds="+this.roleIds,this.formData).then((res)=>{
                     this.dialogFormVisible4Edit = false;
 
                     if (res.data.flag){
@@ -297,7 +297,7 @@
             },
             //添加
             handleAdd () {
-                axios.post("/user/add.do?checkitemIds="+this.checkitemIds,this.formData).then((res)=>{
+                axios.post("/user/add.do?roleIds="+this.roleIds,this.formData).then((res)=>{
                     this.dialogFormVisible = false;
                     if (res.data.flag){
                         this.$message({
@@ -336,7 +336,7 @@
                 //默认切换到第一个标签页（基本信息）
                 this.activeName='first';
                 //重置
-                this.checkitemIds = [];
+                this.roleIds = [];
                 axios.get("/checkitem/findAll.do").then((res)=>{
                     if (res.data.flag){
                         this.tableData = res.data.data;
@@ -357,7 +357,7 @@
                             if (res.data.flag){
                                 this.tableData = res.data.data;
                                 axios.get("/checkgroup/findCheckItemIdsByCheckGroupId.do?id="+row.id).then((res)=>{
-                                    this.checkitemIds=res.data;
+                                    this.roleIds=res.data;
                                 })
                             }else {
                                 this.$message.error(res.data.message);

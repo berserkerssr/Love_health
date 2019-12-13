@@ -272,7 +272,7 @@
             // 弹出编辑窗口
             handleUpdate(row) {
                 //alert(row.id);
-                axios.get("/menu/findById.do?id=" + row.id).then((res)=>{
+                axios.get("/menu/findById.do?id="+ row.id).then((res)=>{
                     if(res.data.flag){
                         //设置编辑窗口属性，dialogFormVisible4Edit为true表示显示
                         this.dialogFormVisible4Edit = true;

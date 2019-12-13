@@ -80,4 +80,8 @@ public class MessageConstant {
     public static final String QUERY_MENU_LIST_FAIL="查询菜单列表失败";
     public static final String QUERY_PERMISSION_LIST_SUCCESS="查询权限列表成功";
     public static final String QUERY_PERMISSION_LIST_FAIL="查询权限列表失败";
+    public static final String EDIT_MENU_SUCCESS="编辑菜单成功";
+    public static final String EDIT_MENU_FAIL="编辑菜单失败";
+    public static final String DELETE_MENU_SUCCESS="菜单删除成功";
+    public static final String DELETE_MENU_FAIL="菜单删除失败";
 }

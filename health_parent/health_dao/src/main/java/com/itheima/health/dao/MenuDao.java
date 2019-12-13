@@ -14,4 +14,10 @@ public interface MenuDao {
     void add(Menu menu);
 
     List<Menu> findAll();
+
+    Menu findById(Integer id);
+
+    void edit(Menu menu);
+
+    void deleteById(Integer id);
 }

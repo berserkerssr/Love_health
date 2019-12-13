@@ -40,11 +40,21 @@ public class MenuServiceImpl implements MenuService {
 
     @Override
     public Menu findById(Integer id) {
-        return null;
+        return menuDao.findById(id);
     }
 
     @Override
     public List<Menu> findAll() {
         return menuDao.findAll();
+    }
+
+    @Override
+    public void edit(Menu menu) {
+        menuDao.edit(menu);
+    }
+
+    @Override
+    public void deleteById(Integer id) {
+        menuDao.deleteById(id);
     }
 }
