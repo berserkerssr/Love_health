@@ -19,8 +19,11 @@
                 WHERE role_id = (SELECT role_id FROM t_user_role WHERE user_id = #{id})) and level = 1 ORDER BY path;
     </select>
 
-    <select id="findMenuListLevel2ByMenuId" parameterType="int" resultType="menu">
-        select t2.* from t_menu t1,t_menu t2 where t1.`id` = t2.`parentMenuId` and t1.`id` = #{id};
+    <select id="findMenuListLevel2ByMenuId" resultType="menu">
+        SELECT * FROM t_menu
+        WHERE id
+        IN (SELECT menu_id FROM t_role_menu
+                WHERE role_id = (SELECT role_id FROM t_user_role WHERE user_id = #{user_id})) AND LEVEL = 2 AND parentMenuId = #{parentMenuId} ORDER BY path;
     </select>
 
     <!--分页查询：注意使用动态sql获取参数的时候，需要使用value-->
