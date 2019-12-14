@@ -83,24 +83,6 @@ public class SetmealServiceImpl implements SetmealService {
         return setMeals;
     }
 
-    // 方案一：使用java代码分析逻辑
-//    @Override
-//    public Setmeal findById(Integer id) {
-//        // 1：使用套餐id，查询套餐对象
-//        Setmeal setmeal = setmealDao.findById(id);
-//        // 2：使用套餐id，查询检查组集合，封装到checkGroups的List<CheckGroup>中
-//        List<CheckGroup> checkGroups = checkGroupDao.findCheckGroupsBySetmealId(id);
-//        // 3：遍历检查组的集合，使用检查组的id，查询对应的检查项的集合
-//        if(checkGroups!=null && checkGroups.size()>0){
-//            for (CheckGroup checkGroup : checkGroups) {
-//                List<CheckItem> checkItems = checkItemDao.findCheckItemsByCheckGroupId(checkGroup.getId());
-//                checkGroup.setCheckItems(checkItems);
-//            }
-//        }
-//        setmeal.setCheckGroups(checkGroups);
-//        return setmeal;
-//    }
-
     // 使用mybatis的映射
     // 使用套餐id，查询套餐详情
     @Override
@@ -177,6 +159,11 @@ public class SetmealServiceImpl implements SetmealService {
                 }
             }
         }
+
+        /** 删除img缓存 */
+        Setmeal setmeal = setmealDao.findById(id);
+        jedisPool.getResource().srem(RedisConstant.SETMEAL_PIC_DB_RESOURCE,setmeal.getImg());
+
         setmealDao.delete(id);
 
     }
