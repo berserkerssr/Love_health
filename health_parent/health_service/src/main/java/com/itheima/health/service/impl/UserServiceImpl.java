@@ -48,6 +48,7 @@ public class UserServiceImpl implements UserService{
         List<Menu> menuList = userDao.findMenuListByUserId(user.getId());
 
         List<Map<String,Object>> mapMenu = new ArrayList<>();
+
         for (Menu menu : menuList) {
             Map<String,Object> map = new HashMap<>();
             map.put("path",menu.getPath());
@@ -67,7 +68,6 @@ public class UserServiceImpl implements UserService{
                 }
             }
             map.put("children",mapMenu1);
-
             mapMenu.add(map);
         }
         return mapMenu;

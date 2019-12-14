@@ -43,9 +43,9 @@
 
     // 使用刚指定的配置项和数据显示图表。
     //myChart.setOption(option);
-    new Vue({
+    var vue = new Vue({
         el: '#app',
-        data(){},
+        data: {},
         created: function () {//在vue初始化时调用
             this.getMemberCountBySex();
         },

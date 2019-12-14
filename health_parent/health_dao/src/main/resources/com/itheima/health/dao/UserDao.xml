@@ -16,7 +16,7 @@
         select * from t_menu
         where id
         in (SELECT menu_id FROM t_role_menu
-                WHERE role_id = (SELECT role_id FROM t_user_role WHERE user_id = #{id})) and level = 1;
+                WHERE role_id = (SELECT role_id FROM t_user_role WHERE user_id = #{id})) and level = 1 ORDER BY path;
     </select>
 
     <select id="findMenuListLevel2ByMenuId" parameterType="int" resultType="menu">
