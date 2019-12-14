@@ -55,7 +55,7 @@ public class UserServiceImpl implements UserService{
             map.put("title",menu.getName());
             map.put("icon",menu.getIcon());
             //查二级菜单
-            List<Menu> menuChildrenList = userDao.findMenuListLevel2ByMenuId(menu.getId());
+            List<Menu> menuChildrenList = userDao.findMenuListLevel2ByMenuId(user.getId(),menu.getId());
 
             List<Map<String,Object>> mapMenu1 = new ArrayList<>();
             if (menuChildrenList != null && menuChildrenList.size() > 0){
