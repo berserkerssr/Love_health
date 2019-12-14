@@ -27,4 +27,10 @@ public interface CheckGroupDao {
     List<CheckGroup> findAll();
 
     List<CheckGroup> findCheckGroupsBySetmealId(Integer id);
+
+    long findCountByCheckGroup(Integer id);
+
+    void delete(Integer id);
+
+    String findSetmealNameByCheckGroupID(Integer id);
 }

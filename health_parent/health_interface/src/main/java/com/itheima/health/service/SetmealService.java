@@ -17,4 +17,10 @@ public interface SetmealService {
     Setmeal findById(Integer id);
 
     List<Map> findSetmealCount();
+
+    List<Integer> findCheckGroupsBySetMealId(Integer id);
+
+    void edit(Setmeal setmeal, Integer... checkgroupIds);
+
+    void delete(Integer id) throws Exception;
 }

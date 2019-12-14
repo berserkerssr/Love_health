@@ -92,11 +92,13 @@
                         </el-table-column>
                         <el-table-column prop="age" label="适用年龄" align="center"></el-table-column>
                         <el-table-column prop="helpCode" label="助记码" align="center"></el-table-column>
+                        <el-table-column prop="price" label="价格" align="center"></el-table-column>
                         <el-table-column prop="remark" label="说明" align="center"></el-table-column>
+                        <el-table-column prop="attention" label="注意事项" align="center"></el-table-column>
                         <el-table-column label="操作" align="center">
                             <template slot-scope="scope">
-                                <el-button type="primary" size="mini">编辑</el-button>
-                                <el-button size="mini" type="danger">删除</el-button>
+                                <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">编辑</el-button>
+                                <el-button size="mini" type="danger" @click="handleDelete(scope.row)">删除</el-button>
                             </template>
                         </el-table-column>
                     </el-table>
@@ -261,6 +263,9 @@
             methods: {
                 //文件上传成功后的钩子，response为服务端返回的值，file为当前上传的文件封装成的js对象
                 handleAvatarSuccess(response, file) {
+                    // 都返回Result(flag,message,data)，data表示上传图片的名称
+                    // 对比axios，如果是axios，响应then((response)=>{})，调用数据使用response.data.flag
+                    // 使用elementUI中upload组件，响应response，调用数据使用resposne.flag
                     // 1：将上传的图片显示到图片框内(http://q1rk0sp3v.bkt.clouddn.com/2m.jpg)
                     this.imageUrl = "http://q1rk0sp3v.bkt.clouddn.com/"+response.data;
                     // 2：给予提示框，表示上传成功

@@ -75,6 +75,7 @@ public class CheckGroupServiceImpl implements CheckGroupService {
         return checkGroupDao.findAll();
     }
 
+
     // 根据所选择的检查项数组（int），和检查组的id，向t_checkgroup_checkitem表新增数据
     private void setCheckGroupAndCheckItem(Integer checkgroupId, Integer[] checkitemIds) {
         if(checkitemIds!=null && checkitemIds.length>0){
@@ -89,4 +90,21 @@ public class CheckGroupServiceImpl implements CheckGroupService {
             }
         }
     }
+
+    //删除检查组
+    @Override
+    public void delete(Integer id) {
+        long count = 0;
+        count = checkGroupDao.findCountByCheckGroup(id);
+        if (count > 0) {
+            throw new RuntimeException("请先清除关联的检查项再执行删除操作");
+        }
+        try {
+            checkGroupDao.delete(id);
+        } catch (Exception e) {
+            String name = checkGroupDao.findSetmealNameByCheckGroupID(id);
+            throw new RuntimeException("无法被删除，该检查组被套餐[ " + name + " ]所引用，请先删除套餐中的引用");
+        }
+    }
+
 }

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import redis.clients.jedis.JedisPool;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -78,6 +79,52 @@ public class SetmealController {
                 queryPageBean.getPageSize(),
                 queryPageBean.getQueryString());
         return pageResult;
+    }
+
+    // 1：使用套餐id，回显套餐的基本信息
+    @RequestMapping(value = "/findById")
+    public Result findById(Integer id){
+        Setmeal setmeal = setmealService.findById(id);
+        if(setmeal!=null){
+            return new Result(true, MessageConstant.QUERY_CHECKGROUP_SUCCESS,setmeal);
+        }
+        else{
+            return new Result(false,MessageConstant.QUERY_CHECKGROUP_FAIL);
+        }
+    }
+
+    // 使用检查组ID，查询检查项的ID集合
+    @RequestMapping(value = "/findCheckGroupsBySetMealId")
+    public List<Integer> findCheckGroupsBySetMealId(Integer id){
+        List<Integer> list  = setmealService.findCheckGroupsBySetMealId(id);
+        return list;
+    }
+
+    // 编辑套餐
+    @RequestMapping(value = "/edit")
+    @PreAuthorize(value = "hasAuthority('SETMEAL_EDIT')")
+    public Result edit(@RequestBody Setmeal setmeal, Integer [] checkgroupIds){
+        try {
+            setmealService.edit(setmeal,checkgroupIds);
+            return new Result(true, MessageConstant.EDIT_CHECKGROUP_SUCCESS);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false,MessageConstant.EDIT_CHECKGROUP_FAIL);
+        }
+    }
+
+    //删除套餐
+    @RequestMapping("/delete")
+    @PreAuthorize(value = "hasAuthority('SETMEAL_DELETE')")
+    public Result delete(Integer id){
+        try {
+            setmealService.delete(id);
+        } catch (RuntimeException e) {
+            return new Result(false,e.getMessage());
+        } catch (Exception e){
+            return new Result(false,MessageConstant.DELETE_CHECKGROUP_FAIL);
+        }
+        return new Result(true,MessageConstant.DELETE_CHECKGROUP_SUCCESS);
     }
 
 }

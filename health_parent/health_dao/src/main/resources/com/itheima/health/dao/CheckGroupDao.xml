@@ -97,4 +97,18 @@
         SELECT * FROM t_checkgroup WHERE id IN (SELECT checkgroup_id FROM t_setmeal_checkgroup WHERE setmeal_id = #{setmealId})
     </select>
 
+<!--  删除检查组   -->
+    <delete id="delete" parameterType="int">
+        delete from t_checkgroup where id = #{value}
+    </delete>
+
+    <select id="findCountByCheckGroup" parameterType="int" resultType="long">
+        select count(*) from t_checkgroup_checkitem where checkgroup_id = #{id}
+    </select>
+
+<!--  查询关联的套餐name  -->
+    <select id="findSetmealNameByCheckGroupID" resultType="string" parameterType="int">
+        SELECT s.`name` FROM `t_setmeal` s,`t_setmeal_checkgroup` sc WHERE sc.`setmeal_id` = s.`id` AND sc.`checkgroup_id` = #{id}
+    </select>
+
 </mapper>

@@ -10,12 +10,15 @@ import com.itheima.health.dao.CheckGroupDao;
 import com.itheima.health.dao.CheckItemDao;
 import com.itheima.health.dao.SetmealDao;
 import com.itheima.health.entity.PageResult;
+import com.itheima.health.pojo.Order;
 import com.itheima.health.pojo.Setmeal;
 import com.itheima.health.service.SetmealService;
+import com.itheima.health.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import redis.clients.jedis.JedisPool;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -121,6 +124,25 @@ public class SetmealServiceImpl implements SetmealService {
         return setmealDao.findSetmealCount();
     }
 
+    // 使用检查组ID，查询检查项的ID集合
+    @Override
+    public List<Integer> findCheckGroupsBySetMealId(Integer id) {
+        return setmealDao.findCheckGroupsBySetMealId(id);
+    }
+
+    //编辑套餐
+    @Override
+    public void edit(Setmeal setmeal, Integer... checkgroupIds) {
+        // 一：根据套餐编辑页面填写情况，更新对应套餐数据，更新t_setmeal
+        setmealDao.edit(setmeal);
+        // 二：操作中间表数据t_setmeal_checkgroup
+        // 1：使用套餐的id，先删除中间表数据
+        setmealDao.deleteSetMealAndCheckGroupBySetMealId(setmeal.getId());
+        // 2：使用套餐id和传递的检查组id的数组，向中间表中添加数据
+        this.setSetmealAndCheckGroup(setmeal.getId(),checkgroupIds);
+    }
+
+
     // 遍历循环，向套餐和检查组的中间表关联数据
     private void setSetmealAndCheckGroup(Integer setmealId, Integer[] checkgroupIds) {
         for (Integer checkgroupId : checkgroupIds) {
@@ -129,6 +151,33 @@ public class SetmealServiceImpl implements SetmealService {
             map.put("checkgroupId",checkgroupId);
             setmealDao.addSetmealAndCheckGroup(map);
         }
+
+    }
+
+    //删除套餐
+    @Override
+    public void delete(Integer id) throws Exception {
+        long count = 0;
+        count = setmealDao.findCountBySetMealId(id);
+        if ( count > 0 ) {
+            throw new RuntimeException("请先清除关联的检查组再执行删除操作");
+        }
+        List<Order> orders = setmealDao.findOrderBySetMealId(id);
+        String today = DateUtils.parseDate2String(new Date());
+        if(orders != null || orders.size() > 0){
+            for (Order order : orders) {
+                if (today.compareTo(DateUtils.parseDate2String(order.getOrderDate())) <= 0) {
+                    if(order.getOrderStatus().equals("已到诊")) {
+                        setmealDao.deleteOrder(order.getId());
+                    }else{
+                        throw new RuntimeException("当前套餐有未到珍的预约");
+                    }
+                }else if(today.compareTo(DateUtils.parseDate2String(order.getOrderDate())) > 0){
+                    setmealDao.deleteOrder(order.getId());
+                }
+            }
+        }
+        setmealDao.delete(id);
 
     }
 }

@@ -1,6 +1,7 @@
 package com.itheima.health.dao;
 
 import com.github.pagehelper.Page;
+import com.itheima.health.pojo.Order;
 import com.itheima.health.pojo.Setmeal;
 
 import java.util.List;
@@ -19,4 +20,20 @@ public interface SetmealDao {
     Setmeal findById(Integer id);
 
     List<Map> findSetmealCount();
+
+    List<Integer> findCheckGroupsBySetMealId(Integer id);
+
+    void edit(Setmeal setmeal);
+
+    void deleteSetMealAndCheckGroupBySetMealId(Integer id);
+
+    long findCountBySetMeal(Integer id);
+
+    void delete(Integer id);
+
+    long findCountBySetMealId(Integer id);
+
+    List<Order> findOrderBySetMealId(Integer id);
+
+    void deleteOrder(Integer id);
 }
