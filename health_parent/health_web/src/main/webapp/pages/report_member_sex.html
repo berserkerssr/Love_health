@@ -11,6 +11,10 @@
     <!-- 引入样式 -->
     <link rel="stylesheet" href="../css/style.css">
     <script src="../js/echarts.js"></script>
+    <script src="../js/vue.js"></script>
+    <script src="../plugins/elementui/index.js"></script>
+    <script src="../js/axios-0.18.0.js"></script>
+    <script src="../js/jquery.min.js"></script>
 </head>
 <body class="hold-transition">
 <div id="app">
@@ -33,6 +37,7 @@
 <!-- 引入组件库 -->
 <script src="../js/vue.js"></script>
 <script src="../js/axios-0.18.0.js"></script>
+<script src="../plugins/elementui/index.js"></script>
 <script type="text/javascript">
 
 
@@ -40,15 +45,15 @@
     //myChart.setOption(option);
     new Vue({
         el: '#app',
-        data:{},
+        data(){},
         created: function () {//在vue初始化时调用
             this.getMemberCountBySex();
         },
         methods: {
             getMemberCountBySex(){
+                var myChart1 = echarts.init(document.getElementById('chart1'));
                 axios.get("/report/getMemberCountBySex.do").then((res)=>{
                     // 基于准备好的dom，初始化echarts实例
-                    var myChart1 = echarts.init(document.getElementById('chart1'));
                     myChart1.setOption({
                         title : {
                             text: '会员性别占比',
@@ -82,17 +87,16 @@
                         ]
                     });
                 }).catch((error)=>{
-                    this.showError(error)
+                    this.showMessage(error);
                 });
             },
 
-            showError(error){
-                if(error == 'Error: Request failed with status code 403'){
+            showMessage(r){
+                if(r == 'Error: Request failed with status code 403'){
                     //权限不足
-                    alert("!");
                     this.$message.error('权限不足');
                     return;
-                } else{
+                }else{
                     this.$message.error('未知错误');
                     return;
                 }
