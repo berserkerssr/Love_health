@@ -34,45 +34,70 @@
 <script src="../js/vue.js"></script>
 <script src="../js/axios-0.18.0.js"></script>
 <script type="text/javascript">
-    // 基于准备好的dom，初始化echarts实例
-    var myChart1 = echarts.init(document.getElementById('chart1'));
+
 
     // 使用刚指定的配置项和数据显示图表。
     //myChart.setOption(option);
+    new Vue({
+        el: '#app',
+        data:{},
+        created: function () {//在vue初始化时调用
+            this.getMemberCountBySex();
+        },
+        methods: {
+            getMemberCountBySex(){
+                axios.get("/report/getMemberCountBySex.do").then((res)=>{
+                    // 基于准备好的dom，初始化echarts实例
+                    var myChart1 = echarts.init(document.getElementById('chart1'));
+                    myChart1.setOption({
+                        title : {
+                            text: '会员性别占比',
+                            subtext: '',
+                            x:'center'
+                        },
+                        tooltip : {//提示框组件
+                            trigger: 'item',//触发类型，在饼形图中为item
+                            formatter: "{a} <br/>{b} : {c} ({d}%)"//提示内容格式
+                        },
+                        legend: {
+                            orient: 'vertical',
+                            left: 'left',
+                            data: res.data.data.sexType
+                        },
+                        series : [
+                            {
+                                name: '会员性别占比',
+                                type: 'pie',
+                                radius : '55%',
+                                center: ['50%', '60%'],
+                                data:res.data.data.memberCount,
+                                itemStyle: {
+                                    emphasis: {
+                                        shadowBlur: 10,
+                                        shadowOffsetX: 0,
+                                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                    }
+                                }
+                            }
+                        ]
+                    });
+                }).catch((error)=>{
+                    this.showError(error)
+                });
+            },
 
-    axios.get("/report/getMemberCountBySex.do").then((res)=>{
-        myChart1.setOption({
-        title : {
-            text: '会员性别占比',
-            subtext: '',
-            x:'center'
-        },
-        tooltip : {//提示框组件
-            trigger: 'item',//触发类型，在饼形图中为item
-            formatter: "{a} <br/>{b} : {c} ({d}%)"//提示内容格式
-        },
-        legend: {
-            orient: 'vertical',
-            left: 'left',
-            data: res.data.data.sexType
-        },
-        series : [
-            {
-                name: '会员性别占比',
-                type: 'pie',
-                radius : '55%',
-                center: ['50%', '60%'],
-                data:res.data.data.memberCount,
-                itemStyle: {
-                    emphasis: {
-                        shadowBlur: 10,
-                        shadowOffsetX: 0,
-                        shadowColor: 'rgba(0, 0, 0, 0.5)'
-                    }
+            showError(error){
+                if(error == 'Error: Request failed with status code 403'){
+                    //权限不足
+                    alert("!");
+                    this.$message.error('权限不足');
+                    return;
+                } else{
+                    this.$message.error('未知错误');
+                    return;
                 }
             }
-        ]
-    });
+        }
     });
 </script>
 </html>
