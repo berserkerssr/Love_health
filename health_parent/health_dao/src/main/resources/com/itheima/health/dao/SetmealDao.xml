@@ -97,6 +97,9 @@
             <if test="age!=null and age.length>0">
                 age = #{age},
             </if>
+            <if test="img!=null and img.length>0">
+                img = #{img},
+            </if>
         </set>
         where id = #{id}
     </update>

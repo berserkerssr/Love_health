@@ -93,7 +93,7 @@ public class SetmealController {
         }
     }
 
-    // 使用检查组ID，查询检查项的ID集合
+    // 使用套餐ID，查询检查组的ID集合
     @RequestMapping(value = "/findCheckGroupsBySetMealId")
     public List<Integer> findCheckGroupsBySetMealId(Integer id){
         List<Integer> list  = setmealService.findCheckGroupsBySetMealId(id);
